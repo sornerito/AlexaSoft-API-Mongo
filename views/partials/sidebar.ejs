@@ -6,20 +6,69 @@
 
     # Igual dejaré el link acá: https://www.youtube.com/watch?v=PAm_QcN6Ffs #
 -->
-
-<div>
-    <ul>
-        <li>
-            <a href="/ventas">
-                <i class="fab fa-js"></i>
-                Venta1
-            </a>
-        </li>
-        <li>
-            <a href="/">
-                <i class="fab fa-js"></i>
-                Venta2
-            </a>
-        </li>
-    </ul>
-</div>
+<nav class="navbar bg-body-tertiary border-bottom border-dark sinFondo fixed-top sticky-top">
+    <div class="container-fluid">
+        <% if (locals && locals.req && locals.req.originalUrl === '/login') { %>
+            <% } else { %>
+        <button class="navbar-toggler me-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="me-2 textoNav">Opciones</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <% } %>
+        <a class="navbar-brand ms-auto" href="/admin">
+            <img src="/public/img/logoAlexa.jpg" alt="AlexaSoft" width="150" height="auto">
+        </a>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="navbar-brand ms-auto" href="/admin">
+                            <img src="/public/img/logoAlexa.jpg" alt="AlexaSoft" width="150" height="auto">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/login">
+                            <i class="fa-solid fa-user"></i>
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/configuracion">
+                            <i class="fa-solid fa-gears"></i>
+                            Configuracion
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/insumos">
+                            <i class="fa-solid fa-boxes-packing"></i>
+                            Insumos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/compras">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Compras
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ventas">
+                            <i class="fa-brands fa-shopify"></i>
+                            Ventas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/citas">
+                            <i class="fa-regular fa-clipboard"></i>
+                            Citas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav> <!-- Fin Navbar -->
