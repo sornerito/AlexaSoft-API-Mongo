@@ -17,15 +17,16 @@ exports.verificarSesion = async (req, res) => {
     const cliente = new MongoClient(uri)
         try {
             await cliente.connect()
-            const usuario = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Correo: data.correo }, {Correo:1, Contrasena:1})
+            const usuario = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Correo: data.correo }, { Contrasena:1, Rol:1})
             
             if (usuario) {
-                const {Contrasena, _id} = usuario
+                const {Contrasena, _id, Rol} = usuario
                 if (data.contrasena != Contrasena) {
-                    res.render("layouts/login", { error: "Contraseña incorrecta" });
+                    res.render("layouts/login", { error: "Contraseña incorrecta"  });
                 } else {
                     req.session.loggedin = true;
-                    req.session.idUsuario = _id
+                    req.session.idUsuario = _id;
+                    req.session.rol = Rol.Nombre_Rol;
                     res.redirect("/")
                 }
             } else {
