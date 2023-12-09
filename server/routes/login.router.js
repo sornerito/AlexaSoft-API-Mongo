@@ -7,7 +7,7 @@ const loginController = require('../controllers/loginController')
 //Abrir login
 router.get("/login", loginController.login)
 
-//Validar datos del formulario
+// Validar datos del formulario
 router.post("/login", loginController.verificarSesion)
 
 //Cerrar Sesión
