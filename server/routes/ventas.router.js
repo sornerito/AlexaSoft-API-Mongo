@@ -8,4 +8,8 @@ const ventasController = require('../controllers/ventasController')
 
 router.get('/ventas', ventasController.homepage);
 
+router.get('/add', ventasController.addVentas);
+
+router.post('/add', ventasController.postVentas);
+
 module.exports = router;
