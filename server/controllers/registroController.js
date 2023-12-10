@@ -1,4 +1,5 @@
-const { MongoClient} = require("mongodb")
+const usuario = require("../models/modelConfiguracion")
+const { MongoClient } = require("mongodb")
 const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/"
 
 //Renderizar Regitro
@@ -12,7 +13,7 @@ exports.verRegistro = async (req, res) => {
     if (req.session.loggedin === true) {
         res.redirect("admin");
     } else {
-        res.render("layouts/registro", { error: "", locals});
+        res.render("layouts/registro", { error: "", locals });
     }
 };//Fin funcion
 
@@ -25,28 +26,32 @@ exports.guardarUsuario = async (req, res) => {
     };
     //Datos del formulario
     const data = req.body;
+    /*console.log(data)*/ //Mostrar datos formulario
+
+    var permisos = []; //Variable definida
+    var nombreRol = "";
+    var estadoRol = "";
+
+    /*BUSCAR ROL EN COLECCION*/
     const cliente = new MongoClient(uri)
-        try {
-            await cliente.connect()
-            const usuario = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Correo: data.correo }, { Contrasena:1, Rol:1})
-            
-            if (usuario) {
-                const {Contrasena, _id, Rol} = usuario
-                if (data.contrasena != Contrasena) {
-                    res.render("layouts/login", { error: "Contraseña incorrecta" , locals });
-                } else {
-                    req.session.loggedin = true;
-                    req.session.idUsuario = _id;
-                    req.session.rol = Rol.Nombre_Rol;
-                    res.redirect("/")
-                }
-            } else {
-                res.render("layouts/login", { error: "Usuario no encontrado", locals });
-            }
-        } catch (error) {
-            console.log(error)
-        } finally {
-            await cliente.close()
-        }
+    try {
+        await cliente.connect()
+        const rol = await cliente.db("ALEXASOFT").collection("roles").findOne({ Nombre_Rol: "Cliente" })
+
+        const { Nombre_Rol, Estado, Permisos } = rol;
+        //Llenar variables definidas
+        permisos = Permisos;
+        nombreRol = Nombre_Rol;
+        estadoRol = Estado;
+
+    } catch (error) {
+        console.log(error)
+    } finally {
+        await cliente.close()
+    }
+    /*BUSCAR ROL EN COLECCION*/
+
+    const newUsuario = new usuario({})
+
 
 };//Fin funcion
