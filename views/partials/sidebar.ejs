@@ -10,26 +10,26 @@
     <a href="/admin">
         <img src="img/logoAlexa.jpg" alt="AlexaSoft" width="150" height="auto">
     </a>
-    <div class="navbar-links">
-        <% if (!locals.req.session.idUsuario) { %>
-            <!-- Mostrar solo cuando la sesión no está iniciada -->
-            <a href="/registrar">Registrar</a>
-        <% } else { %>
-            <!-- Mostrar solo cuando la sesión está iniciada -->
-            <a href="/cerrarsesion">Cerrar Sesión</a>
-            <div class="dropdown">
-                <button>Opciones</button>
-                <div class="dropdown-content">
-                    <a href="/admin">Admin</a>
-                    <a href="/citas">Citas</a>
-                    <a href="/ventas">Ventas</a>
-                    <a href="/compras">Compras</a>
-                    <a href="/salidainsumos">Salida Insumos</a>
-                    <a href="/usuarios">Usuarios</a>
-                </div>
+
+<div class="navbar-links">
+    <% if (!locals.req.session.idUsuario) { %>
+
+        <a href="/registrar">Registrar</a>
+    <% } else { %>
+        <a href="/cerrarsesion">Cerrar Sesión</a>
+        <div class="dropdown">
+            <button>Opciones</button>
+            <div class="dropdown-content">
+                <a href="/admin">Admin</a>
+                <a href="/citas">Citas</a>
+                <a href="/ventas">Ventas</a>
+                <a href="/compras">Compras</a>
+                <a href="/salidainsumos">Salida Insumos</a>
+                <a href="/usuarios">Usuarios</a>
             </div>
-        <% } %>
-    </div>
+        </div>
+    <% } %>
+</div>
 </nav>
 <script>
     document.addEventListener("DOMContentLoaded", (e)=>{

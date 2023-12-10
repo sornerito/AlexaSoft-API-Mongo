@@ -17,6 +17,11 @@ exports.login = async (req, res) => {
 
 //Validar Formulario
 exports.verificarSesion = async (req, res) => {
+    const locals = {
+        title: 'AlexaSoft | Login',
+        description: 'Página Login',
+        req: req
+    };
     //Datos del formulario
     const data = req.body;
     const cliente = new MongoClient(uri)
@@ -27,7 +32,7 @@ exports.verificarSesion = async (req, res) => {
             if (usuario) {
                 const {Contrasena, _id, Rol} = usuario
                 if (data.contrasena != Contrasena) {
-                    res.render("layouts/login", { error: "Contraseña incorrecta"  });
+                    res.render("layouts/login", { error: "Contraseña incorrecta" , locals });
                 } else {
                     req.session.loggedin = true;
                     req.session.idUsuario = _id;
@@ -35,7 +40,7 @@ exports.verificarSesion = async (req, res) => {
                     res.redirect("/")
                 }
             } else {
-                res.render("layouts/login", { error: "Usuario no encontrado" });
+                res.render("layouts/login", { error: "Usuario no encontrado", locals });
             }
         } catch (error) {
             console.log(error)
