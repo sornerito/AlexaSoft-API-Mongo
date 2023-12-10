@@ -5,27 +5,56 @@
     <form method="POST" id="formulario">
 
         <label>Email</label>
-        <input type="email" name="correo" >
+        <input type="email" name="Correo" id="Correo">
 
       <div>
         <label>Contraseña</label>
-        <input type="password" name="contrasena">
+        <input type="password" name="Contrasena" id="Contrasena">
       </div>
   
-      <button type="submit">Iniciar sesion</button>
-  
-      <% if (error) { %>
-        <script>
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '<%= error %>'
-          });
-        </script>
-        <% } %>
+      <button id="botonLogin">Iniciar sesion</button>
+
     </form>
+    <% if (error) { %>
+      <script>
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: '<%= error %>'
+        });
+      </script>
+      <% } %>
 
     <script>
+      document.getElementById("botonLogin").addEventListener("click", async (e) => {
+        e.preventDefault();
+        validarDatos()
+    })
+    function validarDatos() {
+        const correo = document.getElementById("Correo").value;
+        const contrasena = document.getElementById("Contrasena").value;
+
+        if ( correo.trim() === '' ||  contrasena.trim() === '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Complete los campos'
+            });
+        } else if (!correo.endsWith('@gmail.com')) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El correo debe terminar en @gmail.com.'
+            });
+        }
+         else {
+            
+                document.getElementById("formulario").submit();
+                document.getElementById("formulario").reset();
+        }
+    }
+
+
         document.addEventListener("DOMContentLoaded", (event) => {
         event.preventDefault();
       });
