@@ -42,7 +42,7 @@ const ConfiguracionSchema = new mongoose.Schema({
     required: true
   },
   Cedula: {
-    type: Number,
+    type: String,
     required: true
   },
   Correo: {

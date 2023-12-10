@@ -25,16 +25,72 @@ exports.guardarUsuario = async (req, res) => {
         description: 'Página Registro',
         req: req
     };
+    //Preparacion para conectar a Mongo
+    const cliente = await new MongoClient(uri)
+
     //Datos del formulario
     const data = req.body;
-    /*console.log(data)*/ //Mostrar datos formulario
 
-    var permisos = []; //Variable definida
+    //TRAER REGISTROS
+    /*Buscar Campos Repetidos*/
+
+    // Variables definidas
+    let correoRepetido = false;
+    let instagramRepetido = false;
+    let cedulaRepetida = false;
+    let telefonoRepetido = false;
+
+    try {
+        await cliente.connect();
+
+        // Verificar si el correo ya está registrado
+        const correoResult = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Correo: data.Correo });
+        if (correoResult) {
+            correoRepetido = true;
+        }
+
+        // Verificar si el Instagram ya está registrado
+        const instagramResult = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Instagram: data.Instagram });
+        if (instagramResult) {
+            instagramRepetido = true;
+        }
+
+        // Verificar si la cédula ya está registrada
+        const cedulaResult = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Cedula: data.Cedula });
+        if (cedulaResult) {
+            cedulaRepetida = true;
+        }
+
+        // Verificar si el teléfono ya está registrado
+        const telefonoResult = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Telefono: data.Telefono });
+        if (telefonoResult) {
+            telefonoRepetido = true;
+        }
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await cliente.close();
+    }
+
+    
+    // Verificar campos repetidos
+    if (cedulaRepetida) {
+        return res.render("layouts/registro", { locals, error: "La cédula ya está registrada en la página" });
+    } else if (correoRepetido) {
+        return res.render("layouts/registro", { locals, error: "El correo ya está registrado en la página" });
+    } else if (telefonoRepetido) {
+        return res.render("layouts/registro", { locals, error: "El teléfono ya está registrado en la página" });
+    } else if (data.Instagram && instagramRepetido) {
+        return res.render("layouts/registro", { locals, error: "El Instagram ya está registrado en la página" });
+    }
+
+    //En caso de que no hayan variables repetidas...
+    //Variable definidas
+    var permisos = [];
     var nombreRol = "";
     var estadoRol = "";
 
     /*BUSCAR ROL EN COLECCION*/
-    const cliente = new MongoClient(uri)
     try {
         await cliente.connect()
         const rol = await cliente.db("ALEXASOFT").collection("roles").findOne({ Nombre_Rol: "Cliente" })
@@ -61,7 +117,7 @@ exports.guardarUsuario = async (req, res) => {
         Telefono: data.Telefono,
         Instagram: data.Instagram,
         Contrasena: data.Contrasena,
-        Rol:{
+        Rol: {
             Nombre_Rol: nombreRol,
             Estado: estadoRol,
             Permisos: permisos
@@ -69,12 +125,13 @@ exports.guardarUsuario = async (req, res) => {
     })
     /*Organizar datos en el esquema*/
 
-
+    //Insertar Registro
     try {
         await usuario.create(newUsuario)
         await res.redirect("login")
     } catch (error) {
         console.log(error)
     }
+}
 
-};//Fin funcion
+    ;//Fin funcion

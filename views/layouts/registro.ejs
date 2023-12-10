@@ -7,7 +7,7 @@
     </div>
     <div>
         <label>Cédula: </label>
-        <input type="number" name="Cedula" id="Cedula" required>
+        <input type="text" name="Cedula" id="Cedula" required>
     </div>
     <div>
         <label>Email: </label>
@@ -26,19 +26,77 @@
         <input type="password" name="Contrasena" id="Contrasena">
     </div>
 
-    <button type="submit">Crear Cuenta</button>
+    <button id="botonRegistro">Crear Cuenta</button>
 
-    <% if (error) { %>
-        <script>
+</form>
+
+<% if (error) { %>
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '<%= error %>'
+      });
+    </script>
+    <% } %>
+
+<script>
+    document.getElementById("botonRegistro").addEventListener("click", async (e) => {
+        e.preventDefault();
+        validarDatos()
+    })
+    function validarDatos() {
+        const nombre = document.getElementById("Nombre_Usuario").value;
+        const cedula = document.getElementById("Cedula").value;
+        const correo = document.getElementById("Correo").value;
+        const telefono = document.getElementById("Telefono").value;
+        let instagram = document.getElementById("Instagram").value;
+        const contrasena = document.getElementById("Contrasena").value;
+
+        if (nombre.trim() === '' || cedula.trim() === '' || correo.trim() === '' || telefono.trim() === '' || contrasena.trim() === '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: '<%= error %>'
+                text: 'Complete los campos'
             });
-        </script>
-        <% } %>
-</form>
+        } else if (!(/^\d+$/.test(cedula))) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'La cédula debe contener solo números.'
+            });
+        } else if (!correo.endsWith('@gmail.com')) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El correo debe terminar en "@gmail.com".'
+            });
+        }
+        else if (!(/^\d+$/.test(telefono))) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El teléfono debe contener solo números.'
+            });
+        } else {
+            if (!instagram.trim() === '') {
+                // Validar Instagram
+                if (!instagram.startsWith('@')) {
+                    instagram = '@' + instagram; // Agregar @ si no esta
+                }
+               
+                    document.getElementById("Instagram").value = instagram;
+                    document.getElementById("formulario").submit();
+                    document.getElementById("formulario").reset();
+    
+            } else {
+                document.getElementById("formulario").submit();
+                document.getElementById("formulario").reset();
+            }
 
+        }
+    }
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", (event) => {
         event.preventDefault();
