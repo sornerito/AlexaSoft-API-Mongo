@@ -1,5 +1,15 @@
 const mongoose = require('mongoose');
 
+const dbUrl = 'mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/ALEXASOFT'
+
+// Configuración de la conexión
+mongoose.connect(dbUrl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
+
 const PermisoSchema = new mongoose.Schema({
   Nombre_Permiso: {
     type: String,
@@ -9,7 +19,7 @@ const PermisoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+}, { _id: false });
 
 const RolSchema = new mongoose.Schema({
   Nombre_Rol: {
@@ -24,7 +34,7 @@ const RolSchema = new mongoose.Schema({
     type: [PermisoSchema],
     default: [],
   },
-});
+}, { _id: false });
 
 const ConfiguracionSchema = new mongoose.Schema({
   Nombre_Usuario: {
@@ -32,7 +42,7 @@ const ConfiguracionSchema = new mongoose.Schema({
     required: true
   },
   Cedula: {
-    type: String,
+    type: Number,
     required: true
   },
   Correo: {
@@ -62,8 +72,8 @@ const ConfiguracionSchema = new mongoose.Schema({
     type: RolSchema,
     required: true
   }
-});
+}, { versionKey: false });
 
-const usuario = mongoose.model('usuario', ConfiguracionSchema);
+const usuario = mongoose.model('configuracion', ConfiguracionSchema, "configuracion", "ALEXASOFT");
 
 module.exports = usuario;

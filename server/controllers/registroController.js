@@ -1,4 +1,5 @@
 const usuario = require("../models/modelConfiguracion")
+const mongoose = require("mongoose");
 const { MongoClient } = require("mongodb")
 const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/"
 
@@ -51,7 +52,29 @@ exports.guardarUsuario = async (req, res) => {
     }
     /*BUSCAR ROL EN COLECCION*/
 
-    const newUsuario = new usuario({})
 
+    /*Organizar datos en el esquema*/
+    const newUsuario = new usuario({
+        Nombre_Usuario: data.Nombre_Usuario,
+        Cedula: data.Cedula,
+        Correo: data.Correo,
+        Telefono: data.Telefono,
+        Instagram: data.Instagram,
+        Contrasena: data.Contrasena,
+        Rol:{
+            Nombre_Rol: nombreRol,
+            Estado: estadoRol,
+            Permisos: permisos
+        }
+    })
+    /*Organizar datos en el esquema*/
+
+
+    try {
+        await usuario.create(newUsuario)
+        await res.redirect("login")
+    } catch (error) {
+        console.log(error)
+    }
 
 };//Fin funcion
