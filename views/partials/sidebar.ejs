@@ -13,8 +13,8 @@
 
 <div class="navbar-links">
     <% if (!locals.req.session.idUsuario) { %>
-
-        <a href="/registrar">Registrar</a>
+        <a href="/login">Iniciar Sesión</a>
+        <a href="/registro">Registrar</a>
     <% } else { %>
         <a href="/cerrarsesion">Cerrar Sesión</a>
         <div class="dropdown">

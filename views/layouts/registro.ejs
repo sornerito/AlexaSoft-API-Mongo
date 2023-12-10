@@ -1,0 +1,49 @@
+<h1>Registro</h1>
+
+<form method="POST" id="formulario">
+    <div>
+        <label>Nombre: </label>
+        <input type="text" name="Nombre_Usuario" id="Nombre_Usuario" required>
+    </div>
+    <div>
+        <label>Cédula: </label>
+        <input type="number" name="Cedula" id="Cedula" required>
+    </div>
+    <div>
+        <label>Email: </label>
+        <input type="email" name="Correo" id="Correo" required>
+    </div>
+    <div>
+        <label>Telefono: </label>
+        <input type="text" name="Telefono" id="Telefono" required>
+    </div>
+    <div>
+        <label>Instagram: </label>
+        <input type="text" name="Instagram" id="Instagram" required>
+    </div>
+    <div>
+        <label>Contraseña: </label>
+        <input type="password" name="Contrasena" id="Contrasena">
+    </div>
+
+    <input type="hidden" name="Estado_Usuario" id="Estado_Usuario" value="Habilitado" >
+
+
+    <button type="submit">Crear Cuenta</button>
+
+    <% if (error) { %>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '<%= error %>'
+            });
+        </script>
+        <% } %>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        event.preventDefault();
+    });
+</script>

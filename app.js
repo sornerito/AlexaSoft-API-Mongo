@@ -17,6 +17,7 @@ connectBD();
 //IMPORTAR RUTAS
 const loginRutas = require('./server/routes/login.router')
 const ventasRutas = require('./server/routes/ventas.router')
+const registroRutas = require('./server/routes/registro.router')
 /*const configuracionRutas = require('./server/routes/configuracion.router')
 const salidaInsumosRutas = require('./server/routes/salidaInsumos.router')
 const comprasRutas = require('./server/routes/compras.router')
@@ -65,6 +66,7 @@ app.use(express.static('public'));
 // # Rutas
 app.use('/', loginRutas)
 app.use('/', ventasRutas)
+app.use('/', registroRutas)
 // Cuando el usuario entra al aplicativo, se validara si tiene una sesion iniciada, si no lo manda para el login
 app.get('/', (req, res) => {
     if (req.session.loggedin === true) {
@@ -89,65 +91,6 @@ app.get('/admin', (req, res) => {
     }
 
 });
-/*
-// ## Demás renderezación de páginas
-app.get('/login', (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Login',
-        description: 'Página Login',
-        req: req
-    };
-    res.render('layouts/login', locals);
-});
-
-app.get('/config', (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Configuración',
-        description: 'Página Configuración',
-        req: req
-    };
-    res.render('layouts/config', locals);
-});
-
-app.get('/insumos', (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Insumos',
-        description: 'Página Insumos',
-        req: req
-    };
-    res.render('layouts/insumos', locals);
-});
-
-app.get('/compras', (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Compras',
-        description: 'Página Compras',
-        req: req
-    };
-    res.render('layouts/login', locals);
-});
-
-app.get('/ventas', (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Ventas',
-        description: 'Página Ventas',
-        req: req
-    };
-    res.render('layouts/ventas', locals);
-});
-
-app.get('/citas', (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Citas',
-        description: 'Página Citas',
-        req: req
-    };
-    res.render('layouts/citas', locals);
-});
-*/
-
-
-
 
 // # Ruta para manejar errores
 app.get('*', (req, res) => {

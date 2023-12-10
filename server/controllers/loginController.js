@@ -1,4 +1,4 @@
-const { MongoClient, ObjectId } = require("mongodb")
+const { MongoClient} = require("mongodb")
 const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/"
 
 //Renderizar Login
