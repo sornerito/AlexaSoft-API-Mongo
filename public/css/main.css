@@ -37,4 +37,64 @@ body .textoOro {
     max-width: 90%;
     right: 0% !important;
     transform: translateX(0%);
-  }
+}
+
+/*Dropdown*/
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width: 100%;
+    right: 0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    width: auto;
+    background-color: white;
+    border: #000000 solid 2px;
+}
+
+.dropdown-content a {
+    display: block;
+    color: #000000;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    color: #FFFFFF;
+    background-color: #73293D;
+}
+
+/*Dropdown*/
+
+
+/*Nav*/
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: #000000 solid 2px;
+}
+
+nav a {
+    text-decoration: none;
+    margin: 0 15px;
+    color: #000000;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    margin: 0 15px;
+}
+/*Nav*/

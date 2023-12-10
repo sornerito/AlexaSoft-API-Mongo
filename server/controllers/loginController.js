@@ -3,10 +3,15 @@ const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/"
 
 //Renderizar Login
 exports.login = async (req, res) => {
-    if (req.session.loggedin != true) {
-        res.render("layouts/login", { error: "" });
+    const locals = {
+        title: 'AlexaSoft | Login',
+        description: 'Página Login',
+        req: req
+    };
+    if (req.session.loggedin === true) {
+        res.redirect("admin");
     } else {
-        res.redirect("admin")
+        res.render("layouts/login", { error: "", locals});
     }
 };//Fin funcion
 
@@ -42,8 +47,8 @@ exports.verificarSesion = async (req, res) => {
 
 //Cerrar Sesión
 exports.cerrarSesion = (req, res) => {
-    if (req.session.loggedin == true) {
+    if (req.session.loggedin === true) {
         req.session.destroy();
     }
-    res.redirect("/")
+    res.redirect("/");
 };//Fin funcion

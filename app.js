@@ -67,7 +67,7 @@ app.use('/', loginRutas)
 app.use('/', ventasRutas)
 // Cuando el usuario entra al aplicativo, se validara si tiene una sesion iniciada, si no lo manda para el login
 app.get('/', (req, res) => {
-    if (req.session.loggedin == true) {
+    if (req.session.loggedin === true) {
         res.redirect('/admin')
     } else {
         res.redirect('/login')
@@ -76,7 +76,7 @@ app.get('/', (req, res) => {
 
 // ## Esta renderezación será la principal
 app.get('/admin', (req, res) => {
-    if (req.session.loggedin == true) {
+    if (req.session.loggedin === true) {
         const locals = {
             title: 'AlexaSoft',
             description: 'Página Completa',
