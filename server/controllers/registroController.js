@@ -1,6 +1,6 @@
 const usuario = require("../models/modelConfiguracion")
 const { MongoClient } = require("mongodb")
-const connectBD = require('../config/db')
+const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
 
 //Renderizar Regitro
 exports.verRegistro = async (req, res) => {
@@ -25,7 +25,7 @@ exports.guardarUsuario = async (req, res) => {
         req: req
     };
     //Preparacion para conectar a Mongo
-    const cliente = await new MongoClient(connectBD)
+    const cliente = await new MongoClient(uri)
 
     //Datos del formulario
     const data = req.body;

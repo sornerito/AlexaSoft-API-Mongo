@@ -1,4 +1,10 @@
+/* Aquí el controlador hará que en el router de ventas extraía el contenido
+    que se necesita o que esté dentro del router al exportar la página de
+    inicio (exampleController.homepage).
+*/
+
 const { MongoClient, ObjectId } = require("mongodb");
+const modelVentas = require('../models/modelVentas');
 const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
 
 // Renderizar configuracion
@@ -24,6 +30,59 @@ exports.verVentas = async (req, res) => {
         await ventasClient.close();
     }
 };// Fin funcion
+
+/**
+ * GET /
+ * New Customer Form
+ */
+exports.addVentas = async (req, res) => {
+
+    const locals = {
+        title: 'AlexaSoft | Ventas Añadir',
+        description: 'Página Ventas Añadir',
+    };
+
+    res.render("crearGeneral/addVentas", locals);
+};
+
+/**
+ * POST /
+ * Create New Customer
+ */
+
+exports.postVentas = async (req, res) => {
+    console.log(req.body);
+
+    const fechaActual = new Date();
+    const fechaFormateada = fechaActual
+        .toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
+        .replace(/\//g, '');
+
+    // Obtener el último número de factura de la colección de ventas en MongoDB
+    const ultimoNumero = await modelVentas.findOne({}, { numeroFactura: 1 }, { sort: { numeroFactura: -1 } });
+
+    let nuevoNumero = 1;
+    if (ultimoNumero) {
+        nuevoNumero = parseInt(ultimoNumero.numeroFactura.substring(ultimoNumero.numeroFactura.length - 3)) + 1;
+    }
+
+    const numFac = "VEN" + fechaFormateada + nuevoNumero.toString();
+
+    // Crear un nuevo documento para la colección de ventas
+    const newVentas = new modelVentas({
+        numeroFactura: req.body.numFac,
+        Fecha: req.body.fechaActual,
+
+    });
+
+    try {
+        await modelVentas.create(newVentas);
+        res.status(200).json({ message: 'Factura creada correctamente', numeroFactura: numFac });
+        res.redirect("/");
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 
 /* exports.verEditarUsuario = async (req, res) => {
@@ -173,55 +232,55 @@ exports.editarUsuario = async (req, res) => {
     /*BUSCAR ROL EN COLECCION*/
 
 
-    /*ACTUALIZAR USUARIO
-    try {
-        await cliente.connect()
-        await cliente.db("ALEXASOFT").collection("configuracion").updateOne(
-            { _id: new ObjectId(idUsuario) },
-            {
-                $set: {
-                    Nombre_Rol: data.Nombre_Rol,
-                    Cedula: data.Cedula,
-                    Correo: data.Correo,
-                    Telefono: data.Telefono,
-                    Instagram: data.Instagram,
-                    Estado_Usuario: data.Estado_Usuario,
-                    'Rol.Nombre_Rol': data.Nombre_Rol,
-                    'Rol.Permisos': permisos
-                }
+/*ACTUALIZAR USUARIO
+try {
+    await cliente.connect()
+    await cliente.db("ALEXASOFT").collection("configuracion").updateOne(
+        { _id: new ObjectId(idUsuario) },
+        {
+            $set: {
+                Nombre_Rol: data.Nombre_Rol,
+                Cedula: data.Cedula,
+                Correo: data.Correo,
+                Telefono: data.Telefono,
+                Instagram: data.Instagram,
+                Estado_Usuario: data.Estado_Usuario,
+                'Rol.Nombre_Rol': data.Nombre_Rol,
+                'Rol.Permisos': permisos
             }
-        );
-        res.redirect("usuarios")
+        }
+    );
+    res.redirect("usuarios")
 
 
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: 'Hubo un error al modificar el usuario.' });
-    } finally {
-        await cliente.close()
-    }
-    /*ACTUALIZAR USUARIO
+} catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Hubo un error al modificar el usuario.' });
+} finally {
+    await cliente.close()
+}
+/*ACTUALIZAR USUARIO
 
 }//fin funcion
 
 
 exports.borrarUsuario = async (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Configuracion',
-        description: 'Página Configuracion',
-        req: req
-    };
-    const idUsuario = req.params.id;
+const locals = {
+    title: 'AlexaSoft | Configuracion',
+    description: 'Página Configuracion',
+    req: req
+};
+const idUsuario = req.params.id;
 
-    const cliente = new MongoClient(uri)
-    try {
-        await cliente.connect()
-        cliente.db("ALEXASOFT").collection("configuracion").deleteOne({ _id: new ObjectId(idUsuario) });
+const cliente = new MongoClient(uri)
+try {
+    await cliente.connect()
+    cliente.db("ALEXASOFT").collection("configuracion").deleteOne({ _id: new ObjectId(idUsuario) });
 
-        res.redirect("usuarios", { error: "", locals });
-    } catch (error) {
-        console.error(error);
-    } finally {
-        await cliente.close()
-    }
+    res.redirect("usuarios", { error: "", locals });
+} catch (error) {
+    console.error(error);
+} finally {
+    await cliente.close()
+}
 }//fin funcion */

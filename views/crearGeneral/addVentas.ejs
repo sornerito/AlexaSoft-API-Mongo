@@ -1,75 +1,173 @@
-<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Ventas</h1>
-    <div class="btn-toolbar mb-2 mb-md 0">
-        <div class="btn-group me-2">
-            <button class="btn btn-sm btn-outline-secondary">?</button>
+<div>
+    <h1>Ventas</h1>
+    <div>
+        <div class="botonInfo">
+            <button id="btnInfo">Info</button>
         </div>
     </div>
 </div>
 
-<form action="/add" method="POST">
-    <div class="row form-group mb-4">
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
+<div class="centrarBody">
+    <form method="POST" id="formulario">
+        <div>
+            <label>Colaborador: </label>
+            <button id="btnColaborador">Añadir</button>
         </div>
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
+        <div>
+            <label>Cotización: </label>
+            <button id="btnCotizacion">Añadir</button>
         </div>
-    </div>
-    <div class="row form-group mb-4">
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
-        </div>
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
-        </div>
-    </div>
-    <div class="row form-group mb-4">
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
-        </div>
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
-        </div>
-    </div>
-    <div class="row form-group mb-4">
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
-        </div>
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
-        </div>
-    </div>
-    <div class="row form-group mb-4">
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
-        </div>
-        <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
-        </div>
-    </div>
+        <button id="botonRegistro" class="fondoOro">Registrar</button>
+    </form>
+</div>
 
-    <div class="form-group mb-4">
-        <button type="submit" class="btn btn-primary">Añadir Venta</button>
+<!-- Modal para Colaborador -->
+<div id="modalColaborador" class="modal">
+    <h2>Formulario Colaborador</h2>
+    <div>
+        <label>Colaborador: </label>
+        <select name="" id="selectColaborador" onchange="mostrarSeccionCedula(this.value)">
+            <option value="" selected disabled> Selecciona un colaborador </option>
+            <option value="Juan">Juan</option>
+            <option value="Maria">Maria</option>
+            <option value="Camila">Camila</option>
+            <option value="Carlos">Carlos</option>
+        </select>
     </div>
-</form>
+    <br>
+    <button onclick="registrarColaborador()" class="fondoOro">Añadir</button>
+    <button onclick="cerrarModal('modalColaborador')" class="fondoVino">Cerrar</button>
+</div>
+
+<!-- Modal para Cotización -->
+<div id="modalCotizacion" class="modal">
+    <h2>Formulario Cotización</h2>
+    <div>
+        <label>Cotización: </label>
+        <input type="text">
+    </div>
+    <br>
+    <button onclick="registrarColaborador()" class="fondoOro">Añadir</button>
+    <button onclick="cerrarModal('modalCotizacion')" class="fondoVino">Cerrar</button>
+</div>
+
+<!-- Tu script personalizado -->
+<script>
+    // Función para mostrar SweetAlert con información
+    document.getElementById('btnInfo').addEventListener('click', function () {
+        Swal.fire({
+            title: 'Información sobre Ventas',
+            html: `
+            <p>En esta sección, se realiza la venta de productos y servicios.</p>
+            <p>Proceso de venta:</p>
+            <ol>
+                <li>El colaborador puede registrar información sobre la venta de productos.</li>
+                <li>Para cada venta, se puede generar una cotización asociada.</li>
+                <li>Al hacer clic en "Registrar", los datos se enviarán para su procesamiento.</li>
+            </ol>
+            <p>Recuerda llenar todos los campos necesarios y verificar la información antes de confirmar.</p>
+        `,
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
+        });
+    });
+
+    // Función deshabilitar aleatoriamente una opción del select
+    document.addEventListener('DOMContentLoaded', function () {
+        deshabilitarColaboradorAleatorio();
+    });
+
+    // Función para mostrar el modal de Colaborador
+    document.getElementById('btnColaborador').addEventListener('click', function () {
+        document.getElementById('modalColaborador').style.display = 'block';
+    });
+
+    // Función para mostrar el modal de Cotización
+    document.getElementById('btnCotizacion').addEventListener('click', function () {
+        document.getElementById('modalCotizacion').style.display = 'block';
+    });
+
+    // Función para deshabilitar aleatoriamente un option
+    function deshabilitarColaboradorAleatorio() {
+        var select = document.getElementById('selectColaborador');
+        var opciones = select.options;
+
+        // Obtener un índice aleatorio
+        var indiceAleatorio = Math.floor(Math.random() * opciones.length);
+
+        // Deshabilitar la opción aleatoria
+        opciones[indiceAleatorio].disabled = true;
+    }
+
+    // Función para mostrar o no la sección de Cedula y asignar valores
+    function mostrarSeccionCedula(colaboradorSeleccionado) {
+        // Agrega aquí la lógica específica según la condición que necesitas
+        if (colaboradorSeleccionado === 'Juan' || colaboradorSeleccionado === 'Maria' || colaboradorSeleccionado === 'Camila' || colaboradorSeleccionado === 'Carlos') {
+            asignarCedulaYEstado(colaboradorSeleccionado);
+        }
+    }
+
+    // Función para asignar cédula y estado
+    function asignarCedulaYEstado(colaboradorSeleccionado) {
+        // Aquí puedes asignar la cédula y establecer el estado como "Habilitado"
+        var cedula = obtenerCedula(colaboradorSeleccionado);
+        var estado = 'Habilitado';
+
+        // Puedes hacer lo que necesites con la cédula y el estado
+        console.log('Cédula:', cedula);
+        console.log('Estado:', estado);
+    }
+
+    // Función para obtener la cédula según el colaborador seleccionado
+    function obtenerCedula(colaboradorSeleccionado) {
+        // Puedes definir aquí las cédulas correspondientes a cada colaborador
+        // Aquí he puesto cédulas de ejemplo, pero debes ajustarlas según tus necesidades
+        switch (colaboradorSeleccionado) {
+            case 'Juan':
+                return '734253951';
+            case 'Maria':
+                return '538517897';
+            case 'Camila':
+                return '923120102';
+            case 'Carlos':
+                return '891520888';
+            default:
+                return '';
+        }
+    }
+
+    // Funciones para registrar Colaborador y Cotización (puedes personalizar según tus necesidades)
+    function registrarColaborador() {
+        // Obtener el colaborador seleccionado
+        var colaboradorSeleccionado = document.getElementById('selectColaborador').value;
+
+        // Validar si se ha seleccionado un colaborador
+        if (colaboradorSeleccionado === '') {
+            Swal.fire('Error', 'Selecciona un colaborador antes de registrar.', 'error');
+            return; // Detener la ejecución de la función si no se ha seleccionado un colaborador
+        }
+
+        // Cerrar el modal
+        cerrarModal('modalColaborador');
+
+        // Enviar datos al servidor o realizar otras acciones según tus necesidades
+        // Puedes agregar lógica adicional si es necesario
+        Swal.fire('Colaborador registrado', '', 'success');
+    }
+
+    function registrarCotizacion() {
+        // No necesitas el envío automático del formulario aquí
+        // Puedes agregar lógica adicional si es necesario
+
+        // Cerrar el modal
+        cerrarModal('modalCotiacion');
+
+        document.getElementById('modalCotizacion').style.display = 'none';
+        Swal.fire('Cotización registrada', '', 'success');
+    }
+
+    // Función cerrar modales
+    function cerrarModal(idModal) {
+        document.getElementById(idModal).style.display = 'none';
+    }
+</script>

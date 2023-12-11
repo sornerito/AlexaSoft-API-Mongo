@@ -34,28 +34,24 @@
     <link rel="stylesheet" href="css/ventas.css">
     <link rel="stylesheet" href="css/login.css">
 
-
     <!--SWEET ALERT 2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
 <body>
-
-    
-
-        <div class="container-fluid">
-            <div class="row">
-                <%- include('../partials/sidebar.ejs') %>
-                    <%- body %>
-            </div>
+    <div class="container-fluid">
+        <div class="row">
+            <%- include('../partials/sidebar.ejs') %>
+                <%- body %>
         </div>
+    </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", (e)=>{
-                e.preventDefault();
-            })
-        </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", (e) => {
+            e.preventDefault();
+        })
+    </script>
 </body>
 
 </html>

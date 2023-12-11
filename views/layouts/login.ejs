@@ -1,61 +1,59 @@
+<h1>Login</h1>
 
+<form method="POST" id="formulario">
 
-    <h1>Login</h1>
+  <label>Email</label>
+  <input type="email" name="Correo" id="Correo">
 
-    <form method="POST" id="formulario">
+  <div>
+    <label>Contraseña</label>
+    <input type="password" name="Contrasena" id="Contrasena">
+  </div>
 
-        <label>Email</label>
-        <input type="email" name="Correo" id="Correo">
+  <button id="botonLogin">Iniciar sesion</button>
 
-      <div>
-        <label>Contraseña</label>
-        <input type="password" name="Contrasena" id="Contrasena">
-      </div>
-  
-      <button id="botonLogin">Iniciar sesion</button>
-
-    </form>
-    <% if (error) { %>
-      <script>
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: '<%= error %>'
-        });
-      </script>
-      <% } %>
+</form>
+<% if (error) { %>
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: '<%= error %>'
+    });
+  </script>
+  <% } %>
 
     <script>
       document.getElementById("botonLogin").addEventListener("click", async (e) => {
         e.preventDefault();
         validarDatos()
-    })
-    function validarDatos() {
+      })
+      function validarDatos() {
         const correo = document.getElementById("Correo").value;
         const contrasena = document.getElementById("Contrasena").value;
 
-        if ( correo.trim() === '' ||  contrasena.trim() === '') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Complete los campos'
-            });
+        if (correo.trim() === '' || contrasena.trim() === '') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Complete los campos'
+          });
         } else if (!correo.endsWith('@gmail.com')) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'El correo debe terminar en @gmail.com.'
-            });
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El correo debe terminar en @gmail.com.'
+          });
         }
-         else {
-            
-                document.getElementById("formulario").submit();
-                document.getElementById("formulario").reset();
+        else {
+
+          document.getElementById("formulario").submit();
+          document.getElementById("formulario").reset();
         }
-    }
+      }
 
 
-        document.addEventListener("DOMContentLoaded", (event) => {
+      document.addEventListener("DOMContentLoaded", (event) => {
         event.preventDefault();
       });
     </script>
