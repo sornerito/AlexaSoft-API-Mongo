@@ -1,5 +1,5 @@
 const { MongoClient} = require("mongodb")
-const connectBD = require('../config/db')
+const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
 
 //Renderizar Login
 exports.login = async (req, res) => {
@@ -24,7 +24,7 @@ exports.verificarSesion = async (req, res) => {
     };
     //Datos del formulario
     const data = req.body;
-    const cliente = new MongoClient(connectBD)
+    const cliente = new MongoClient(uri)
         try {
             await cliente.connect()
             const usuario = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Correo: data.Correo }, { Contrasena:1, Rol:1})

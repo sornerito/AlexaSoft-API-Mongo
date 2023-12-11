@@ -1,67 +1,227 @@
-/* Aquí el controlador hará que en el router de ventas extraía el contenido
-    que se necesita o que esté dentro del router al exportar la página de
-    inicio (exampleController.homepage).
-*/
+const { MongoClient, ObjectId } = require("mongodb");
+const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
 
-const modelVentas = require('../models/modelVentas');
-const connectBD = require('../config/db');
-
-
-// # GET /ventas
-// # Página Principal
-
-exports.homepage = async (req, res) => {
+// Renderizar configuracion
+exports.verVentas = async (req, res) => {
     const locals = {
         title: 'AlexaSoft | Ventas',
-        description: 'Página Ventas'
-    }
+        description: 'Página Ventas',
+        req: req
+    };
+
+    const ventasClient = new MongoClient(uri);
 
     try {
-        const ventas = await modelVentas.find({});
-        const messages = await req.flash("info");
-        res.render('layouts/ventas', { locals, messages, ventas });
+        await ventasClient.connect();
+        const ventasCollection = ventasClient.db("ALEXASOFT").collection("ventas");
+        const ventasData = await ventasCollection.find().toArray();
+        res.render("layouts/ventas", { error: "", locals, datos: ventasData });
     } catch (error) {
-        console.error('Error al obtener las ventas:', error);
-        const messages = ["Error al obtener las ventas. Por favor, inténtelo de nuevo."];
-        res.status(500).render('layouts/ventas', { locals, messages, ventas: [] });
+        console.error("Error al obtener datos de ventas:", error);
+        // Puedes manejar el error de otra manera si es necesario
+        res.render("layouts/ventas", { error: "Error al obtener datos de ventas", locals, datos: [] });
+    } finally {
+        await ventasClient.close();
     }
-}
+};// Fin funcion
 
-// # GET /ventas
-// # Nuevo Ventas Form
 
-exports.addVentas = async (req, res) => {
+/* exports.verEditarUsuario = async (req, res) => {
     const locals = {
-        title: 'AlexaSoft | Crear',
-        description: 'Página Crear'
-    }
-    res.render('crearGeneral/addVentas', locals)
-}
-
-
-// # POST /ventas
-// # Añadir Ventas Form
-
-exports.postVentas = async (req, res) => {
-
-    /* # Este console no lo saquen es necesario para ver si en la consola de la página o
-        en la consola de la terminal se imprimen los datos del formulario. */
-    console.log(req.body);
-
-
-    const newVenta = new modelVentas({
-        CAMBIAR_AQUI: req.body.CAMBIAR_AQUI,  // ## Importante aquí cambiar campos que estén en la base de datos y el formulario
-        CAMBIAR_AQUI: req.body.CAMBIAR_AQUI,  // ETC ETC ETC
-        CAMBIAR_AQUI: req.body.CAMBIAR_AQUI,  // ETC ETC ETC
-    });
+        title: 'AlexaSoft | Editar Configuracion',
+        description: 'Página Configuracion',
+        req: req
+    };
+    const idUsuario = req.params.id;
+    console.log("ID DESDE BACKEND "+idUsuario)
+    const cliente = new MongoClient(uri)
 
     try {
-        await modelVentas.create(newVenta);
-        await req.flash('info', 'Nueva venta ha sido añadida')
+        await cliente.connect()
+        const usuario = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ _id: new ObjectId(idUsuario) });
+        console.log(usuario)
+        res.render("layouts/configuracionEdit", { error: "", locals, usuario });
+    } catch (error) {
+        console.error(error);
+    } finally {
+        await cliente.close();
+    }
+}//fin funcion
 
-        res.redirect('/ventas')
+exports.editarUsuario = async (req, res) => {
+
+    const locals = {
+        title: 'AlexaSoft | Modificar Usuario',
+        description: 'Página Modificar Usuario',
+        req: req
+    };
+
+    //Preparacion para conectar a Mongo
+    const cliente = new MongoClient(uri);
+    //Datos del formulario
+    const data = req.body;
+    console.log("DATOS DEL FORMULARIO "+req.body);
+    //ID del usuario
+    const idUsuario = req.params.id;
+
+    // Variables definidas
+    let correoActual = null;
+    let telefonoActual = null;
+    let cedulaActual = null;
+    let instagramActual = null;
+    let usuarioActual = null;
+
+    try {
+        await cliente.connect()
+
+        // Buscar Datos usuario actual
+        const datosUsuarioActual = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ _id: new ObjectId(idUsuario) });
+
+        //Guardar valor actual para omitirlo
+        correoActual = datosUsuarioActual.Correo;
+        telefonoActual = datosUsuarioActual.Telefono;
+        cedulaActual = datosUsuarioActual.Cedula;
+        instagramActual = datosUsuarioActual.Instagram;
+        usuarioActual = datosUsuarioActual;
+        console.log(usuarioActual._id)
+    } catch (error) {
+
+    } finally {
+
+    }
+
+
+    /*Buscar Campos Repetidos
+    // Variables definidas
+    let correoRepetido = false;
+    let instagramRepetido = false;
+    let cedulaRepetida = false;
+    let telefonoRepetido = false;
+
+    try {
+        await cliente.connect();
+
+        // Verificar si el correo ya está registrado (omitir si es el mismo valor actual)
+        if (data.Correo !== correoActual) {
+            const correoResult = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Correo: data.Correo });
+            if (correoResult) {
+                correoRepetido = true;
+            }
+        }
+
+        // Verificar si el Instagram ya está registrado (omitir si es el mismo valor actual)
+        if (data.Instagram !== instagramActual) {
+            const instagramResult = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Instagram: data.Instagram });
+            if (instagramResult) {
+                instagramRepetido = true;
+            }
+        }
+
+        // Verificar si la cédula ya está registrada (omitir si es el mismo valor actual)
+        if (data.Cedula !== cedulaActual) {
+            const cedulaResult = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Cedula: data.Cedula });
+            if (cedulaResult) {
+                cedulaRepetida = true;
+            }
+        }
+
+        // Verificar si el teléfono ya está registrado (omitir si es el mismo valor actual)
+        if (data.Telefono !== telefonoActual) {
+            const telefonoResult = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ Telefono: data.Telefono });
+            if (telefonoResult) {
+                telefonoRepetido = true;
+            }
+        }
     } catch (error) {
         console.log(error);
+    } finally {
+        await cliente.close();
     }
 
-}
+
+    // Verificar campos repetidos
+    if (cedulaRepetida) {
+        return res.render("layouts/configuracionEdit", { locals, error: "La cédula ya está registrada en la página", usuario:usuarioActual });
+    } else if (correoRepetido) {
+        return res.render("layouts/configuracionEdit", { locals, error: "El correo ya está registrado en la página", usuario:usuarioActual });
+    } else if (telefonoRepetido) {
+        return res.render("layouts/configuracionEdit", { locals, error: "El teléfono ya está registrado en la página", usuario:usuarioActual });
+    } else if (data.Instagram && instagramRepetido) {
+        return res.render("layouts/configuracionEdit", { locals, error: "El Instagram ya está registrado en la página", usuario:usuarioActual });
+    }
+
+
+
+    //En caso de que no hayan variables repetidas...
+    //Variable definidas
+    var permisos = [];
+
+    /*BUSCAR ROL EN COLECCION
+    try {
+        await cliente.connect()
+        const rol = await cliente.db("ALEXASOFT").collection("roles").findOne({ Nombre_Rol: "Cliente" })
+
+        const { Permisos } = rol;
+        //Llenar variables definidas
+        permisos = Permisos;
+
+    } catch (error) {
+        console.log(error)
+    } finally {
+        await cliente.close()
+    }
+    /*BUSCAR ROL EN COLECCION*/
+
+
+    /*ACTUALIZAR USUARIO
+    try {
+        await cliente.connect()
+        await cliente.db("ALEXASOFT").collection("configuracion").updateOne(
+            { _id: new ObjectId(idUsuario) },
+            {
+                $set: {
+                    Nombre_Rol: data.Nombre_Rol,
+                    Cedula: data.Cedula,
+                    Correo: data.Correo,
+                    Telefono: data.Telefono,
+                    Instagram: data.Instagram,
+                    Estado_Usuario: data.Estado_Usuario,
+                    'Rol.Nombre_Rol': data.Nombre_Rol,
+                    'Rol.Permisos': permisos
+                }
+            }
+        );
+        res.redirect("usuarios")
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Hubo un error al modificar el usuario.' });
+    } finally {
+        await cliente.close()
+    }
+    /*ACTUALIZAR USUARIO
+
+}//fin funcion
+
+
+exports.borrarUsuario = async (req, res) => {
+    const locals = {
+        title: 'AlexaSoft | Configuracion',
+        description: 'Página Configuracion',
+        req: req
+    };
+    const idUsuario = req.params.id;
+
+    const cliente = new MongoClient(uri)
+    try {
+        await cliente.connect()
+        cliente.db("ALEXASOFT").collection("configuracion").deleteOne({ _id: new ObjectId(idUsuario) });
+
+        res.redirect("usuarios", { error: "", locals });
+    } catch (error) {
+        console.error(error);
+    } finally {
+        await cliente.close()
+    }
+}//fin funcion */

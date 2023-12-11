@@ -1,10 +1,10 @@
-// # Exportar y mantener la renderización de la tabla "Ventas"
+// # Exportar y mantener la renderización de la tabla "Citas"
 
 const express = require("express");
 const router = express.Router();
 const citasController = require('../controllers/citasController')
 
-// Ventas Routes
+// Citas Routes
 
 router.get('/citas', citasController.verCitas);
 /* 

@@ -83,14 +83,6 @@ const ventaSchema = new Schema({
         type: Number
         // Agrega otros campos si es necesario
     },
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now()
-    }
 });
 
 module.exports = mongoose.model('modelVentas', ventaSchema);
