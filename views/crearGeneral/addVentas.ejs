@@ -51,7 +51,6 @@
     <button onclick="cerrarModal('modalCotizacion')" class="fondoVino">Cerrar</button>
 </div>
 
-<!-- Tu script personalizado -->
 <script>
     // Función para mostrar SweetAlert con información
     document.getElementById('btnInfo').addEventListener('click', function () {
@@ -77,12 +76,10 @@
         deshabilitarColaboradorAleatorio();
     });
 
-    // Función para mostrar el modal de Colaborador
     document.getElementById('btnColaborador').addEventListener('click', function () {
         document.getElementById('modalColaborador').style.display = 'block';
     });
 
-    // Función para mostrar el modal de Cotización
     document.getElementById('btnCotizacion').addEventListener('click', function () {
         document.getElementById('modalCotizacion').style.display = 'block';
     });
@@ -92,36 +89,28 @@
         var select = document.getElementById('selectColaborador');
         var opciones = select.options;
 
-        // Obtener un índice aleatorio
         var indiceAleatorio = Math.floor(Math.random() * opciones.length);
-
-        // Deshabilitar la opción aleatoria
         opciones[indiceAleatorio].disabled = true;
     }
 
-    // Función para mostrar o no la sección de Cedula y asignar valores
     function mostrarSeccionCedula(colaboradorSeleccionado) {
-        // Agrega aquí la lógica específica según la condición que necesitas
         if (colaboradorSeleccionado === 'Juan' || colaboradorSeleccionado === 'Maria' || colaboradorSeleccionado === 'Camila' || colaboradorSeleccionado === 'Carlos') {
             asignarCedulaYEstado(colaboradorSeleccionado);
         }
     }
 
-    // Función para asignar cédula y estado
     function asignarCedulaYEstado(colaboradorSeleccionado) {
-        // Aquí puedes asignar la cédula y establecer el estado como "Habilitado"
         var cedula = obtenerCedula(colaboradorSeleccionado);
         var estado = 'Habilitado';
 
-        // Puedes hacer lo que necesites con la cédula y el estado
+        // Visualizar en consola si pasan los datos.
+        console.log('Colaborador:', colaboradorSeleccionado);
         console.log('Cédula:', cedula);
         console.log('Estado:', estado);
     }
 
     // Función para obtener la cédula según el colaborador seleccionado
     function obtenerCedula(colaboradorSeleccionado) {
-        // Puedes definir aquí las cédulas correspondientes a cada colaborador
-        // Aquí he puesto cédulas de ejemplo, pero debes ajustarlas según tus necesidades
         switch (colaboradorSeleccionado) {
             case 'Juan':
                 return '734253951';
@@ -136,32 +125,25 @@
         }
     }
 
-    // Funciones para registrar Colaborador y Cotización (puedes personalizar según tus necesidades)
+    // Funciones para registrar Colaborador y Cotización
     function registrarColaborador() {
-        // Obtener el colaborador seleccionado
         var colaboradorSeleccionado = document.getElementById('selectColaborador').value;
 
-        // Validar si se ha seleccionado un colaborador
         if (colaboradorSeleccionado === '') {
             Swal.fire('Error', 'Selecciona un colaborador antes de registrar.', 'error');
-            return; // Detener la ejecución de la función si no se ha seleccionado un colaborador
+            return;
         }
 
         // Cerrar el modal
         cerrarModal('modalColaborador');
-
-        // Enviar datos al servidor o realizar otras acciones según tus necesidades
-        // Puedes agregar lógica adicional si es necesario
+        document.getElementById('modalColaborador').style.display = 'none';
         Swal.fire('Colaborador registrado', '', 'success');
     }
 
     function registrarCotizacion() {
-        // No necesitas el envío automático del formulario aquí
-        // Puedes agregar lógica adicional si es necesario
 
         // Cerrar el modal
         cerrarModal('modalCotiacion');
-
         document.getElementById('modalCotizacion').style.display = 'none';
         Swal.fire('Cotización registrada', '', 'success');
     }
