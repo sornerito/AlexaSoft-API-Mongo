@@ -1,0 +1,169 @@
+<h1>Modificar Usuario</h1>
+<pre><%= JSON.stringify(usuario, null, 2) %></pre>
+<form action="/usuarios/edit/<%= usuario._id.toString() %>" method="POST" id="formulario">
+    <div>
+        <label>Nombre: </label>
+        <input type="text" name="Nombre_Usuario" id="Nombre_Usuario" value="<%= usuario.Nombre_Usuario %>" required>
+    </div>
+    <div>
+        <label>Cédula: </label>
+        <input type="text" name="Cedula" id="Cedula" value="<%= usuario.Cedula %>" required>
+    </div>
+    <div>
+        <label>Correo: </label>
+        <input type="email" name="Correo" id="Correo" value="<%= usuario.Correo %>" required>
+    </div>
+    <div>
+        <label>Telefono: </label>
+        <input type="text" name="Telefono" id="Telefono" value="<%= usuario.Telefono %>" required>
+    </div>
+    <div>
+        <label>Instagram: </label>
+        <input type="text" name="Instagram" id="Instagram" value="<%= usuario.Instagram %>" required>
+    </div>
+    <div>
+        <label>Estado: </label>
+        <select name="Estado_Usuario" id="Estado_Usuario">
+            <% if (usuario.Estado_Usuario=="Habilitado" ) {%>
+                <option value="Habilitado" selected>Habilitado</option>
+                <%} else{%>
+                    <option value="Habilitado">Habilitado</option>
+                    <% } %>
+                        <% if (usuario.Estado_Usuario=="Inactivo" ) {%>
+                            <option value="Inactivo" selected>Inactivo</option>
+                            <%} else{%>
+                                <option value="Inactivo">Inactivo</option>
+                                <% } %>
+
+        </select>
+    </div>
+    <div>
+        <label>Rol: </label>
+        <select name="Nombre_Rol" id="Nombre_Rol">
+            <% if (usuario.Rol.Nombre_Rol=="Cliente" ) {%>
+                <option value="Cliente" selected>Cliente</option>
+                <%} else{%>
+                    <option value="Cliente">Cliente</option>
+                    <% } %>
+                        <% if (usuario.Rol.Nombre_Rol=="Adminstrador" ) {%>
+                            <option value="Adminstrador" selected>Adminstrador</option>
+                            <%} else{%>
+                                <option value="Adminstrador">Adminstrador</option>
+                                <% } %>
+
+        </select>
+    </div>
+
+
+    <button id="botonGuardar">Modificar Datos</button>
+
+</form>
+
+<% if (error) { %>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '<%= error %>'
+        });
+    </script>
+    <% } %>
+
+        <script>
+            document.getElementById("botonGuardar").addEventListener("click", async (e) => {
+                e.preventDefault();
+                await validarDatos();
+            });
+
+            document.getElementById("formulario").addEventListener("submit", async () => {
+                await validarDatos();
+            });
+
+            const validarDatos = async () => {
+                const nombre = document.getElementById("Nombre_Usuario").value;
+                const cedula = document.getElementById("Cedula").value;
+                const correo = document.getElementById("Correo").value;
+                const telefono = document.getElementById("Telefono").value;
+                let instagram = document.getElementById("Instagram").value;
+
+
+                if (nombre.trim() === '' || cedula.trim() === '' || correo.trim() === '' || telefono.trim() === '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Complete los campos'
+                    });
+                } else if (!(/^\d+$/.test(cedula))) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'La cédula debe contener solo números.'
+                    });
+                } else if (!correo.endsWith('@gmail.com')) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'El correo debe terminar en "@gmail.com".'
+                    });
+                }
+                else if (!(/^\d+$/.test(telefono))) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'El teléfono debe contener solo números.'
+                    });
+                } else {
+                    if (!instagram.trim() === '') {
+                        // Validar Instagram
+                        if (!instagram.startsWith('@')) {
+                            instagram = '@' + instagram; // Agregar @ si no esta
+                        }
+
+                        document.getElementById("Instagram").value = instagram;
+                        const success = await modificarUsuario();
+                        if (success) {
+                            location.reload();
+                        }
+
+                    } else {
+                        const success = await modificarUsuario();
+
+                        if (success) {
+                            location.reload();
+                        }
+                    }
+                }
+            }
+
+            async function modificarUsuario() {
+                const idUsuario = "<%= usuario._id.toString() %>"; // Obtener el ID del usuario
+                const formData = new FormData(document.getElementById("formulario"));
+
+                try {
+                    const response = await fetch(`/usuarios/edit/${idUsuario}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(Object.fromEntries(formData))
+                    });
+
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un error al modificar el usuario.'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud fetch:', error);
+                }
+            }
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", (event) => {
+                event.preventDefault();
+            });
+        </script>

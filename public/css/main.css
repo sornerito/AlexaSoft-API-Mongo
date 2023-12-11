@@ -14,6 +14,7 @@ body .bordeVino {
 /*Fondo vinotinto*/
 body .fondoVino {
     background-color: #73293D !important;
+    color: white;
 }
 
 /*Borde oro*/
@@ -98,3 +99,13 @@ nav a {
     margin: 0 15px;
 }
 /*Nav*/
+
+/*Tabla*/
+table.tablaEstilo{
+    border-collapse: collapse;
+}
+table.tablaEstilo td{
+    padding:10px;
+}
+
+/*Tabla*/

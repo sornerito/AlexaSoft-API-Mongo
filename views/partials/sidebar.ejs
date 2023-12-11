@@ -12,10 +12,10 @@
     </a>
 
 <div class="navbar-links">
-    <% if (!locals.req.session.idUsuario) { %>
+
         <a href="/login">Iniciar Sesión</a>
         <a href="/registro">Registrar</a>
-    <% } else { %>
+
         <a href="/cerrarsesion">Cerrar Sesión</a>
         <div class="dropdown">
             <button>Opciones</button>
@@ -28,7 +28,7 @@
                 <a href="/usuarios">Usuarios</a>
             </div>
         </div>
-    <% } %>
+
 </div>
 </nav>
 <script>
