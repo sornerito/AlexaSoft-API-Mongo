@@ -4,7 +4,8 @@
 */
 
 const modelVentas = require('../models/modelVentas');
-const mongoose = require('mongoose');
+const connectBD = require('../config/db');
+
 
 // # GET /ventas
 // # Página Principal

@@ -1,0 +1,4 @@
+.centrarBody {
+    display: flex;
+    justify-content: center;
+}
