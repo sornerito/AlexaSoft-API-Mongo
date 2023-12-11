@@ -23,10 +23,11 @@ const loginRutas = require('./server/routes/login.router')
 const ventasRutas = require('./server/routes/ventas.router')
 const registroRutas = require('./server/routes/registro.router')
 const configuracionRutas = require('./server/routes/configuracion.router')
+const citasRutas = require('./server/routes/citas.router')
 /*
 const salidaInsumosRutas = require('./server/routes/salidaInsumos.router')
 const comprasRutas = require('./server/routes/compras.router')
-const citasRutas = require('./server/routes/citas.router')*/
+*/
 //IMPORTAR RUTAS
 
 
@@ -78,6 +79,8 @@ app.use('/', loginRutas)
 app.use('/', ventasRutas)
 app.use('/', registroRutas)
 app.use('/', configuracionRutas)
+app.use('/', citasRutas)
+
 
 // Cuando el usuario entra al aplicativo, se validara si tiene una sesion iniciada, si no lo manda para el login
 app.get('/', (req, res) => {
