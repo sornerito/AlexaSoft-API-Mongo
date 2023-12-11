@@ -8,91 +8,93 @@
 </div>
 
 <!-- Esto no se si cambiarlo ya que esto es BOOTSTRAP SI O SI
-       Estoy viendo si ahorita se podrá mostrar los mensajes de que se ha añadido bien
-       un registro, dependerá si quieren que lo dejemos o así o usamos SweetAlert2
+     Estoy viendo si ahorita se podrá mostrar los mensajes de que se ha añadido bien
+     un registro, dependerá si quieren que lo dejemos o así o usamos SweetAlert2
 
        - Patacón con Queso
   -->
-<% messages.forEach(element=> { %>
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <%= element %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  <% }) %>
-
-
-
-    <div class="table-responsive">
-
-      <table class="table table-striped table-sm">
-        <thead>
-          <tr>
-            <th scope="col">Numero Factura</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Colaborador</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Cotizacion Fecha</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Detalles Cotizacion</th>
-            <th scope="col" class="text-end">Opciones</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% ventas.forEach(element=> { %>
-            <tr class="align-middle">
-              <td>
-                <%= element.numeroFactura %>
-              </td>
-              <td>
-                <%= element.Fecha %>
-              </td>
-              <td>
-                <%= element.Colaborador.Nombre_Colaborador %>
-              </td>
-              <td>
-                <%= element.Estado %>
-              </td>
-              <td>
-                <%= element.Cotizacion.Fecha_Creacion %>
-              </td>
-              <td>
-                <%= element.Cliente.Nombre_Cliente %>
-              </td>
-              <td>
-                <% element.Detalles_Cotizacion.Productos.forEach(producto=> { %>
-                  <div>
-                    Nombre: <%= producto.Nombre_Producto %>,
-                      Precio: <%= producto.Precio %>,
-                        Unidades: <%= producto.Unidades %>,
-                          Subtotal: <%= producto.Subtotal %>
-                  </div>
-                  <% }) %>
-              </td>
-              <td class="text-end">
-
-                <div class="d-flex flex-row justify-content-end gap-2">
-
-                  <a href="/view/<%= element._id %>" type="button" class="btn btn-primary btn-small">
-                    <i class="bi bi-eye"></i>
-                  </a>
-
-                  <a href="/edit/<%= element._id %>" type="button" class="btn btn-warning btn-small">
-                    <i class="bi bi-pencil"></i>
-                  </a>
-
-                  <form action="/edit/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
-                    <button type="submit" class="btn btn-danger btn-small">
-                      <i class="bi bi-person-x"></i>
-                    </button>
-                  </form>
-
-                </div>
-
-
-              </td>
-            </tr>
-            <% }) %>
-        </tbody>
-      </table>
+<div class="centrarBody">
+  <% messages.forEach(element=> { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= element %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    <% }) %>
+
+
+
+      <div class="table-responsive">
+
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Numero Factura</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Colaborador</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Cotizacion Fecha</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Detalles Cotizacion</th>
+              <th scope="col" class="text-end">Opciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% ventas.forEach(element=> { %>
+              <tr class="align-middle">
+                <td>
+                  <%= element.numeroFactura %>
+                </td>
+                <td>
+                  <%= element.Fecha %>
+                </td>
+                <td>
+                  <%= element.Colaborador.Nombre_Colaborador %>
+                </td>
+                <td>
+                  <%= element.Estado %>
+                </td>
+                <td>
+                  <%= element.Cotizacion.Fecha_Creacion %>
+                </td>
+                <td>
+                  <%= element.Cliente.Nombre_Cliente %>
+                </td>
+                <td>
+                  <% element.Detalles_Cotizacion.Productos.forEach(producto=> { %>
+                    <div>
+                      Nombre: <%= producto.Nombre_Producto %>,
+                        Precio: <%= producto.Precio %>,
+                          Unidades: <%= producto.Unidades %>,
+                            Subtotal: <%= producto.Subtotal %>
+                    </div>
+                    <% }) %>
+                </td>
+                <td class="text-end">
+
+                  <div class="d-flex flex-row justify-content-end gap-2">
+
+                    <a href="/view/<%= element._id %>" type="button" class="btn btn-primary btn-small">
+                      <i class="bi bi-eye"></i>
+                    </a>
+
+                    <a href="/edit/<%= element._id %>" type="button" class="btn btn-warning btn-small">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+
+                    <form action="/edit/<%= element._id %>?_method=DELETE" method="POST" class="position-relative">
+                      <button type="submit" class="btn btn-danger btn-small">
+                        <i class="bi bi-person-x"></i>
+                      </button>
+                    </form>
+
+                  </div>
+
+
+                </td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+</div>

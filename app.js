@@ -7,16 +7,12 @@ const expressLayout = require('express-ejs-layouts')
 const session = require('express-session')
 const flash = require('connect-flash');
 const connectBD = require('./server/config/db')
-const methodOverride = require("method-override")
 
 //Definir app
 const app = express()
 
 // Conexión a la base de datos
 connectBD();
-
-//Usar method para usar put y delete
-app.use(methodOverride("_method"))
 
 //IMPORTAR RUTAS
 const loginRutas = require('./server/routes/login.router')
@@ -25,7 +21,10 @@ const registroRutas = require('./server/routes/registro.router')
 const configuracionRutas = require('./server/routes/configuracion.router')
 const citasRutas = require('./server/routes/citas.router')
 /*
+=======
+>>>>>>> 9a6951320bc8e5bc52a363bbfbcae005c2e173ff
 const salidaInsumosRutas = require('./server/routes/salidaInsumos.router')
+/*const configuracionRutas = require('./server/routes/configuracion.router')
 const comprasRutas = require('./server/routes/compras.router')
 */
 //IMPORTAR RUTAS
@@ -39,16 +38,11 @@ app.set('view engine', 'ejs')
 
 // # INICIO MIDDLEWARES (Funciones que se ejecutan antes de las peticiones de los usuarios)
 
-
-
 //Configuracion al traer datos (para ejor manejo de los mismos)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-
-
-
-/* 
+/*
 
 // Conexión a la base de datos
 mongoose.connect('mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/') //Link de la base de datos
@@ -82,6 +76,7 @@ app.use('/', configuracionRutas)
 app.use('/', citasRutas)
 
 
+app.use('/', salidaInsumosRutas)
 // Cuando el usuario entra al aplicativo, se validara si tiene una sesion iniciada, si no lo manda para el login
 app.get('/', (req, res) => {
     if (req.session.loggedin === true) {
