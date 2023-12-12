@@ -25,12 +25,23 @@ exports.vistaInsumos = async (req, res) => {
 
 
 exports.addInsumo = async (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Retirar Insumos',
-        description: 'Página Retirar',
-        req: req
+    try {
+        // Obtén la lista de productos desde la base de datos
+        const productos = await ProductoModel.find({}, 'nombre'); // Ajusta los campos según tu modelo
+
+        const locals = {
+            title: 'AlexaSoft | Retirar Insumos',
+            description: 'Página Retirar',
+            req: req,
+            productos: productos // Pasa la lista de productos al contexto de la vista
+        };
+
+        res.render('crearGeneral/addInsumos', locals);
+    } catch (error) {
+        console.error(error);
+        // Maneja el error de manera adecuada, por ejemplo, redirigiendo a una página de error.
+        res.status(500).send('Error interno del servidor');
     }
-    res.render('crearGeneral/addInsumos', locals)
 }
 
 exports.postInsumos = async (req, res) => {
