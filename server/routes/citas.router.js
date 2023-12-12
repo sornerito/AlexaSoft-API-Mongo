@@ -7,6 +7,8 @@ const citasController = require('../controllers/citasController')
 // Citas Routes
 
 router.get('/citas', citasController.verCitas);
+router.delete("/citas/delete/:id", citasController.borrarCitas)
+
 /* 
 router.get('/add', citasController.addCitas);
 

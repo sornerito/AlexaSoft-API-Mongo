@@ -202,26 +202,26 @@ exports.editarUsuario = async (req, res) => {
     }
     /*ACTUALIZAR USUARIO
 
-}//fin funcion
+}//fin funcion*/
 
 
-exports.borrarUsuario = async (req, res) => {
+exports.borrarCitas = async (req, res) => {
     const locals = {
-        title: 'AlexaSoft | Configuracion',
-        description: 'Página Configuracion',
+        title: 'AlexaSoft | Citas',
+        description: 'Página Citas',
         req: req
     };
-    const idUsuario = req.params.id;
+    const idCitas = req.params.id;
 
-    const cliente = new MongoClient(uri)
+    const citas = new MongoClient(uri)
     try {
-        await cliente.connect()
-        cliente.db("ALEXASOFT").collection("configuracion").deleteOne({ _id: new ObjectId(idUsuario) });
+        await citas.connect()
+        citas.db("ALEXASOFT").collection("citas").deleteOne({ _id: new ObjectId(idCitas) });
 
         res.redirect("usuarios", { error: "", locals });
     } catch (error) {
         console.error(error);
     } finally {
-        await cliente.close()
+        await citas.close()
     }
-}//fin funcion */
+}//fin funcion 
