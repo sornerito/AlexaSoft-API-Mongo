@@ -1,8 +1,3 @@
-/* Aquí el controlador hará que en el router de ventas extraía el contenido
-    que se necesita o que esté dentro del router al exportar la página de
-    inicio (exampleController.homepage).
-*/
-
 const modelInsumos = require('../models/modelInsumos');
 const mongoose = require('mongoose');
 
@@ -39,8 +34,6 @@ exports.addInsumo = async (req, res) => {
 
 exports.postInsumos = async (req, res) => {
 
-    /* # Este console no lo saquen es necesario para ver si en la consola de la página o
-        en la consola de la terminal se imprimen los datos del formulario. */
     console.log(req.body);
 
 
@@ -53,7 +46,7 @@ exports.postInsumos = async (req, res) => {
         await modelInsumos.create(newRetiro);
         await req.flash('info', 'Retiro exitoso')
 
-        res.redirect('/insumos')
+        res.redirect('insumos')
     } catch (error) {
         console.log(error);
     }
