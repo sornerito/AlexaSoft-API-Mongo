@@ -21,10 +21,10 @@
                 <th scope="col">Numero Factura</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Colaborador</th>
-                <th scope="col">Estado</th>
+                <!-- <th scope="col">Estado</th>
                 <th scope="col">Cotizacion Fecha</th>
                 <th scope="col">Cliente</th>
-                <th scope="col">Detalles Cotizacion</th>
+                <th scope="col">Detalles Cotizacion</th> -->
                 <th scope="col" class="text-end">Opciones</th>
             </tr>
         </thead>
@@ -41,25 +41,25 @@
                     <td>
                         <%= element.Colaborador.Nombre_Colaborador %>
                     </td>
-                    <td>
-                        <%= element.Colaborador.Estado %>
+                    <!--<td>
+                        <%= // element.Colaborador.Estado %>
                     </td>
                     <td>
-                        <%= element.Cotizacion.Fecha_Creacion %>
+                        <%= //element.Cotizacion.Fecha_Creacion %>
                     </td>
                     <td>
-                        <%= element.Cotizacion.Cliente.Nombre_Cliente %>
+                        <%= // element.Cotizacion.Cliente.Nombre_Cliente %>
                     </td>
                     <td>
-                        <% element.Cotizacion.Detalles_Cotizacion.Productos.forEach(producto=> { %>
+                        <% // element.Cotizacion.Detalles_Cotizacion.Productos.forEach(producto=> { %>
                             <div>
-                                Nombre: <%= producto.Nombre_Producto %>,
-                                    Precio: <%= producto.Precio %>,
-                                        Unidades: <%= producto.Unidades %>,
-                                            Subtotal: <%= producto.Subtotal %>
+                                Nombre: <%= // producto.Nombre_Producto %>,
+                                    Precio: <%= // producto.Precio %>,
+                                        Unidades: <%= // producto.Unidades %>,
+                                            Subtotal: <%= // producto.Subtotal %>
                             </div>
-                            <% }) %>
-                    </td>
+                            <% // }) %>
+                    </td> -->
                     <td>
                         <a href="/views/edit/<%= element._id %>">
                             <button class="fondoOro">Editar</button>

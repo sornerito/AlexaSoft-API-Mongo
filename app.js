@@ -7,6 +7,7 @@ const expressLayout = require('express-ejs-layouts')
 const session = require('express-session')
 const flash = require('connect-flash');
 const connectBD = require('./server/config/db')
+const bodyParser = require('body-parser');
 
 //Definir app
 const app = express()
@@ -36,19 +37,13 @@ app.set('view engine', 'ejs')
 
 // # INICIO MIDDLEWARES (Funciones que se ejecutan antes de las peticiones de los usuarios)
 
+// Configuración del body-parser
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 //Configuracion al traer datos (para ejor manejo de los mismos)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
-/*
-
-// Conexión a la base de datos
-mongoose.connect('mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/') //Link de la base de datos
-const db = mongoose.connection
-db.on('error', (error)=>console.error(error)) //Mensaje de error en caso de que no se conecte la base de datos
-db.once('open', ()=> console.log('Base de datos conectada')) // Confirmar si la base de datos está conectada (En proceso..)
-
- */
 
 //Configuracion para iniciar sesion
 app.use(session({

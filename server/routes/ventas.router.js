@@ -10,6 +10,6 @@ router.get('/ventas', ventasController.verVentas);
 
 router.get('/add', ventasController.addVentas);
 
-router.post('/add', ventasController.postVentas);
+router.post('/postVentas', ventasController.postVentas);
 
 module.exports = router;

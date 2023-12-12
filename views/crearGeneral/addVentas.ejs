@@ -11,44 +11,10 @@
     <form method="POST" id="formulario">
         <div>
             <label>Colaborador: </label>
-            <button id="btnColaborador">Añadir</button>
-        </div>
-        <div>
-            <label>Cotización: </label>
-            <button id="btnCotizacion">Añadir</button>
+            <input type="text" name="Nombre_Colaborador" id="Nombre_Colaborador">
         </div>
         <button id="botonRegistro" class="fondoOro">Registrar</button>
     </form>
-</div>
-
-<!-- Modal para Colaborador -->
-<div id="modalColaborador" class="modal">
-    <h2>Formulario Colaborador</h2>
-    <div>
-        <label>Colaborador: </label>
-        <select name="" id="selectColaborador" onchange="mostrarSeccionCedula(this.value)">
-            <option value="" selected disabled> Selecciona un colaborador </option>
-            <option value="Juan">Juan</option>
-            <option value="Maria">Maria</option>
-            <option value="Camila">Camila</option>
-            <option value="Carlos">Carlos</option>
-        </select>
-    </div>
-    <br>
-    <button onclick="registrarColaborador()" class="fondoOro">Añadir</button>
-    <button onclick="cerrarModal('modalColaborador')" class="fondoVino">Cerrar</button>
-</div>
-
-<!-- Modal para Cotización -->
-<div id="modalCotizacion" class="modal">
-    <h2>Formulario Cotización</h2>
-    <div>
-        <label>Cotización: </label>
-        <input type="text">
-    </div>
-    <br>
-    <button onclick="registrarColaborador()" class="fondoOro">Añadir</button>
-    <button onclick="cerrarModal('modalCotizacion')" class="fondoVino">Cerrar</button>
 </div>
 
 <script>
@@ -71,85 +37,31 @@
         });
     });
 
-    // Función deshabilitar aleatoriamente una opción del select
     document.addEventListener('DOMContentLoaded', function () {
-        deshabilitarColaboradorAleatorio();
+        document.getElementById('formulario').addEventListener('submit', function (event) {
+            // Evitar que el formulario se envíe de forma predeterminada
+            event.preventDefault();
+
+            // Obtener los datos del formulario
+            var formData = new FormData(this);
+            formData.forEach((value, key) => {
+                console.log(key, value);
+            });
+
+            fetch('/postVentas', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json()) // Cambia a response.text() si esperas HTML o texto
+                .then(data => {
+                    // Manejar la respuesta del servidor si es necesario
+                    console.log(data);
+                })
+                .catch(error => {
+                    // Manejar errores si es necesario
+                    console.error(error);
+                });
+        });
     });
 
-    document.getElementById('btnColaborador').addEventListener('click', function () {
-        document.getElementById('modalColaborador').style.display = 'block';
-    });
-
-    document.getElementById('btnCotizacion').addEventListener('click', function () {
-        document.getElementById('modalCotizacion').style.display = 'block';
-    });
-
-    // Función para deshabilitar aleatoriamente un option
-    function deshabilitarColaboradorAleatorio() {
-        var select = document.getElementById('selectColaborador');
-        var opciones = select.options;
-
-        var indiceAleatorio = Math.floor(Math.random() * opciones.length);
-        opciones[indiceAleatorio].disabled = true;
-    }
-
-    function mostrarSeccionCedula(colaboradorSeleccionado) {
-        if (colaboradorSeleccionado === 'Juan' || colaboradorSeleccionado === 'Maria' || colaboradorSeleccionado === 'Camila' || colaboradorSeleccionado === 'Carlos') {
-            asignarCedulaYEstado(colaboradorSeleccionado);
-        }
-    }
-
-    function asignarCedulaYEstado(colaboradorSeleccionado) {
-        var cedula = obtenerCedula(colaboradorSeleccionado);
-        var estado = 'Habilitado';
-
-        // Visualizar en consola si pasan los datos.
-        console.log('Colaborador:', colaboradorSeleccionado);
-        console.log('Cédula:', cedula);
-        console.log('Estado:', estado);
-    }
-
-    // Función para obtener la cédula según el colaborador seleccionado
-    function obtenerCedula(colaboradorSeleccionado) {
-        switch (colaboradorSeleccionado) {
-            case 'Juan':
-                return '734253951';
-            case 'Maria':
-                return '538517897';
-            case 'Camila':
-                return '923120102';
-            case 'Carlos':
-                return '891520888';
-            default:
-                return '';
-        }
-    }
-
-    // Funciones para registrar Colaborador y Cotización
-    function registrarColaborador() {
-        var colaboradorSeleccionado = document.getElementById('selectColaborador').value;
-
-        if (colaboradorSeleccionado === '') {
-            Swal.fire('Error', 'Selecciona un colaborador antes de registrar.', 'error');
-            return;
-        }
-
-        // Cerrar el modal
-        cerrarModal('modalColaborador');
-        document.getElementById('modalColaborador').style.display = 'none';
-        Swal.fire('Colaborador registrado', '', 'success');
-    }
-
-    function registrarCotizacion() {
-
-        // Cerrar el modal
-        cerrarModal('modalCotiacion');
-        document.getElementById('modalCotizacion').style.display = 'none';
-        Swal.fire('Cotización registrada', '', 'success');
-    }
-
-    // Función cerrar modales
-    function cerrarModal(idModal) {
-        document.getElementById(idModal).style.display = 'none';
-    }
 </script>
