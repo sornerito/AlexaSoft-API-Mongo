@@ -1,26 +1,27 @@
-const modelInsumos = require('../models/modelInsumos');
 const mongoose = require('mongoose');
+const InsumoModel = require('../models/modelInsumos');
+const ProductoModel = require('../models/modelProductos'); // Ajusta la ruta según tu estructura de archivos y modelos
 
-// # GET /ventas
-// # Página Principal
+const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
 
 exports.vistaInsumos = async (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Salida de Insumos',
-        description: 'Página Salida de Insumos',
-    }
+  const locals = {
+    title: 'AlexaSoft | insumos',
+    description: 'Página insumos',
+    req: req
+  };
 
-    try {
-        const Insumos = await modelInsumos.find({});
-        console.log(Insumos)
-        const messages = await req.flash("info");
-        res.render('layouts/insumos', { locals, messages, insumos });
-    } catch (error) {
-        console.error('Error al obtener las ventas:', error);
-        const messages = ["Error al obtener las ventas. Por favor, inténtelo de nuevo."];
-        res.status(500).render('layouts/insumos', { locals, messages, insumos: [] });
-    }
-}
+  try {
+    const insumos = await InsumoModel.find().populate('Producto').exec();
+    res.render('layouts/insumos', { insumos, locals });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error interno del servidor');
+  } finally {
+    // No cierres la conexión aquí; Mongoose manejará la conexión automáticamente
+  }
+};
+
 
 
 exports.addInsumo = async (req, res) => {

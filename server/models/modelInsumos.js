@@ -1,25 +1,16 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
-const salidaInsumosSchema = new Schema({
-    Fecha_Retiro: {
-        type: Date,
-        default: Date.now
-    },
-    Unidades_Retiradas: {
-        type: Number,
-        required: true
-    },
-    Producto: {
-        _id: {
-        type: String,
-        required: true
-        }
-    },
-    Motivo_Anular: {
-        type: String,
-    },
+const InsumoSchema = new mongoose.Schema({
+  Fecha_Retiro: Date,
+  Unidades_Retiradas: Number,
+  Motivo_Anular: String,
+  Producto: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Producto'  // Asegúrate de que estás usando el nombre correcto del modelo Producto
+  }
 });
 
-module.exports = mongoose.model('modelInsumos', salidaInsumosSchema);
+const InsumoModel = mongoose.model('salida_insumos', InsumoSchema);
+
+module.exports = InsumoModel;
+
