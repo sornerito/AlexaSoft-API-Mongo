@@ -6,7 +6,7 @@ const ventasController = require('../controllers/ventasController')
 
 // Ventas Routes
 
-router.get('/ventas', ventasController.homepage);
+router.get('/ventas', ventasController.verVentas);
 
 router.get('/add', ventasController.addVentas);
 

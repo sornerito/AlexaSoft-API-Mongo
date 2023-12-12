@@ -1,88 +1,29 @@
-/* Aquí el controlador hará que en el router de ventas extraía el contenido
-    que se necesita o que esté dentro del router al exportar la página de
-    inicio (exampleController.homepage).
-*/
-
 const { MongoClient, ObjectId } = require("mongodb");
-const modelVentas = require('../models/modelVentas');
 const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
 
 // Renderizar configuracion
-exports.verVentas = async (req, res) => {
+exports.verCitas = async (req, res) => {
     const locals = {
-        title: 'AlexaSoft | Ventas',
-        description: 'Página Ventas',
+        title: 'AlexaSoft | Citas',
+        description: 'Página Citas',
         req: req
     };
 
-    const ventasClient = new MongoClient(uri);
+    const citasClient = new MongoClient(uri);
 
     try {
-        await ventasClient.connect();
-        const ventasCollection = ventasClient.db("ALEXASOFT").collection("ventas");
-        const ventasData = await ventasCollection.find().toArray();
-        res.render("layouts/ventas", { error: "", locals, datos: ventasData });
+        await citasClient.connect();
+        const citasCollection = citasClient.db("ALEXASOFT").collection("citas");
+        const citasData = await citasCollection.find().toArray();
+        res.render("layouts/citas", { error: "", locals, datos: citasData });
     } catch (error) {
-        console.error("Error al obtener datos de ventas:", error);
+        console.error("Error al obtener datos de citas:", error);
         // Puedes manejar el error de otra manera si es necesario
-        res.render("layouts/ventas", { error: "Error al obtener datos de ventas", locals, datos: [] });
+        res.render("layouts/citas", { error: "Error al obtener datos de citas", locals, datos: [] });
     } finally {
-        await ventasClient.close();
+        await citasClient.close();
     }
 };// Fin funcion
-
-/**
- * GET /
- * New Customer Form
- */
-exports.addVentas = async (req, res) => {
-
-    const locals = {
-        title: 'AlexaSoft | Ventas Añadir',
-        description: 'Página Ventas Añadir',
-    };
-
-    res.render("crearGeneral/addVentas", locals);
-};
-
-/**
- * POST /
- * Create New Customer
- */
-
-exports.postVentas = async (req, res) => {
-    console.log(req.body);
-
-    const fechaActual = new Date();
-    const fechaFormateada = fechaActual
-        .toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
-        .replace(/\//g, '');
-
-    // Obtener el último número de factura de la colección de ventas en MongoDB
-    const ultimoNumero = await modelVentas.findOne({}, { numeroFactura: 1 }, { sort: { numeroFactura: -1 } });
-
-    let nuevoNumero = 1;
-    if (ultimoNumero) {
-        nuevoNumero = parseInt(ultimoNumero.numeroFactura.substring(ultimoNumero.numeroFactura.length - 3)) + 1;
-    }
-
-    const numFac = "VEN" + fechaFormateada + nuevoNumero.toString();
-
-    // Crear un nuevo documento para la colección de ventas
-    const newVentas = new modelVentas({
-        numeroFactura: req.body.numFac,
-        Fecha: req.body.fechaActual,
-
-    });
-
-    try {
-        await modelVentas.create(newVentas);
-        res.status(200).json({ message: 'Factura creada correctamente', numeroFactura: numFac });
-        res.redirect("/");
-    } catch (error) {
-        console.log(error);
-    }
-};
 
 
 /* exports.verEditarUsuario = async (req, res) => {
@@ -232,55 +173,55 @@ exports.editarUsuario = async (req, res) => {
     /*BUSCAR ROL EN COLECCION*/
 
 
-/*ACTUALIZAR USUARIO
-try {
-    await cliente.connect()
-    await cliente.db("ALEXASOFT").collection("configuracion").updateOne(
-        { _id: new ObjectId(idUsuario) },
-        {
-            $set: {
-                Nombre_Rol: data.Nombre_Rol,
-                Cedula: data.Cedula,
-                Correo: data.Correo,
-                Telefono: data.Telefono,
-                Instagram: data.Instagram,
-                Estado_Usuario: data.Estado_Usuario,
-                'Rol.Nombre_Rol': data.Nombre_Rol,
-                'Rol.Permisos': permisos
+    /*ACTUALIZAR USUARIO
+    try {
+        await cliente.connect()
+        await cliente.db("ALEXASOFT").collection("configuracion").updateOne(
+            { _id: new ObjectId(idUsuario) },
+            {
+                $set: {
+                    Nombre_Rol: data.Nombre_Rol,
+                    Cedula: data.Cedula,
+                    Correo: data.Correo,
+                    Telefono: data.Telefono,
+                    Instagram: data.Instagram,
+                    Estado_Usuario: data.Estado_Usuario,
+                    'Rol.Nombre_Rol': data.Nombre_Rol,
+                    'Rol.Permisos': permisos
+                }
             }
-        }
-    );
-    res.redirect("usuarios")
+        );
+        res.redirect("usuarios")
 
 
-} catch (error) {
-    console.log(error)
-    res.status(500).json({ message: 'Hubo un error al modificar el usuario.' });
-} finally {
-    await cliente.close()
-}
-/*ACTUALIZAR USUARIO
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Hubo un error al modificar el usuario.' });
+    } finally {
+        await cliente.close()
+    }
+    /*ACTUALIZAR USUARIO
 
-}//fin funcion
+}//fin funcion*/
 
 
-exports.borrarUsuario = async (req, res) => {
-const locals = {
-    title: 'AlexaSoft | Configuracion',
-    description: 'Página Configuracion',
-    req: req
-};
-const idUsuario = req.params.id;
+exports.borrarCitas = async (req, res) => {
+    const locals = {
+        title: 'AlexaSoft | Citas',
+        description: 'Página Citas',
+        req: req
+    };
+    const idCitas = req.params.id;
 
-const cliente = new MongoClient(uri)
-try {
-    await cliente.connect()
-    cliente.db("ALEXASOFT").collection("configuracion").deleteOne({ _id: new ObjectId(idUsuario) });
+    const citas = new MongoClient(uri)
+    try {
+        await citas.connect()
+        citas.db("ALEXASOFT").collection("citas").deleteOne({ _id: new ObjectId(idCitas) });
 
-    res.redirect("usuarios", { error: "", locals });
-} catch (error) {
-    console.error(error);
-} finally {
-    await cliente.close()
-}
-}//fin funcion */
+        res.redirect("usuarios", { error: "", locals });
+    } catch (error) {
+        console.error(error);
+    } finally {
+        await citas.close()
+    }
+}//fin funcion 

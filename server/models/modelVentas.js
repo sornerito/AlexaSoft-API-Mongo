@@ -20,7 +20,6 @@ const ventaSchema = new Schema({
             type: String,
             required: true
         }
-        // Agrega otros campos del colaborador si es necesario
     },
     Estado: {
         type: String,
@@ -33,7 +32,6 @@ const ventaSchema = new Schema({
         },
         Fecha_Finalizacion: {
             type: Date
-            // Agrega otros campos de la cotización si es necesario
         },
         Estado: {
             type: String,
@@ -51,11 +49,9 @@ const ventaSchema = new Schema({
         },
         Correo: {
             type: String
-            // Agrega otros campos del cliente si es necesario
         },
         Telefono: {
             type: String
-            // Agrega otros campos del cliente si es necesario
         }
     },
     Detalles_Cotizacion: {
@@ -77,20 +73,10 @@ const ventaSchema = new Schema({
                 required: true
             }
         }]
-        // Agrega otros campos de detalles de cotización si es necesario
     },
     Total: {
         type: Number
-        // Agrega otros campos si es necesario
     },
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now()
-    }
 });
 
 module.exports = mongoose.model('modelVentas', ventaSchema);

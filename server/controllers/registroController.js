@@ -1,7 +1,6 @@
 const usuario = require("../models/modelConfiguracion")
-const mongoose = require("mongoose");
 const { MongoClient } = require("mongodb")
-const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/"
+const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
 
 //Renderizar Regitro
 exports.verRegistro = async (req, res) => {
