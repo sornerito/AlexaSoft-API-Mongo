@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const productoSchema = new mongoose.Schema({
   nombre: String,
+  unidades: Number
   // Otros campos del producto si es necesario
 });
 

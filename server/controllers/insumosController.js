@@ -38,13 +38,13 @@ exports.postInsumos = async (req, res) => {
     console.log(req.body);
 
 
-    const newRetiro = new modelInsumos({
+    const newRetiro = new InsumoModel({
         Unidades_Retiradas: req.body.Unidades_Retiradas,
         CAMBIAR_AQUI: req.body.CAMBIAR_AQUI,
     });
 
     try {
-        await modelInsumos.create(newRetiro);
+        await InsumoModel.create(newRetiro);
         await req.flash('info', 'Retiro exitoso')
 
         res.redirect('insumos')
