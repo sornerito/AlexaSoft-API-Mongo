@@ -1,11 +1,10 @@
-<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+<div class="custom-header">
     <h1 class="h2">Ventas</h1>
-    <div class="btn-toolbar mb-2 mb-md 0">
-        <div class="btn-group me-2">
-            <a href="/add" class="btn btn-sm btn-outline-secondary">+ Nueva Venta</a>
-        </div>
+    <div class="custom-button">
+        <a href="/add">+ Nueva Venta</a>
     </div>
 </div>
+
 
 <!-- Esto no se si cambiarlo ya que esto es BOOTSTRAP SI O SI
      Estoy viendo si ahorita se podrá mostrar los mensajes de que se ha añadido bien
@@ -68,12 +67,11 @@
                             <% // }) %>
                     </td> -->
                     <td>
-                        <a href="/views/edit/<%= element._id %>">
-                            <button class="fondoOro">Editar</button>
-                        </a>
-                        <br>
+                        <a href="/views/edit/<%= element._id %>" class="clickeable fondoOro bordeOro custom-button">
+                            <button class="fondoOro bordeOro clickeable">Editar</button>
+                        </a><br><br>
                         <form action="/edit/delete/<%= element._id %>" method="POST">
-                            <button type="submit" class="fondoVino">Eliminar</button>
+                            <button type="submit" class="fondoVino bordeVino clickeable custom-button">Eliminar</button>
                         </form>
                     </td>
                 </tr>

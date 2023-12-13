@@ -1,38 +1,38 @@
-    <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Citas</h1>
-        <div class="btn-toolbar mb-2 mb-md 0">
-            <div class="btn-group me-2">
-                <a href="/addCitas" class="btn btn-sm btn-outline-secondary">+ Nueva Venta</a>
-            </div>
+<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Citas</h1>
+    <div class="btn-toolbar mb-2 mb-md 0">
+        <div class="btn-group me-2">
+            <a href="/addCitas" class="btn btn-sm btn-outline-secondary">+ Nueva Venta</a>
         </div>
     </div>
-    <div class="centrarBody">
-        <table class="tablaEstilo" border="1">
-            <thead>
+</div>
+<div class="centrarBody">
+    <table class="tablaEstilo" border="1">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Detalles</th>
+                <th>Estado</th>
+                <th>Motivo Cancelacion</th>
+                <th>Horario</th>
+                <th>Cliente</th>
+                <th>Paquete</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% datos.forEach(citas=> { %>
                 <tr>
-                    <th>Fecha</th>
-                    <th>Detalles</th>
-                    <th>Estado</th>
-                    <th>Motivo Cancelacion</th>
-                    <th>Horario</th>
-                    <th>Cliente</th>
-                    <th>Paquete</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% datos.forEach(citas=> { %>
-                    <tr>
-                        <td>
-                            <%= citas.Fecha %>
-                        </td>
-                        <td>
-                            <%= citas.Detalles %>
-                        </td>
-                        <td>
-                            <%= citas.Estado %>
-                        </td>
-                        <!--    <td>
+                    <td>
+                        <%= citas.Fecha %>
+                    </td>
+                    <td>
+                        <%= citas.Detalles %>
+                    </td>
+                    <td>
+                        <%= citas.Estado %>
+                    </td>
+                    <!--    <td>
                             <%=// citas.Motivo_Cancelacion %>
                         </td>
                         <td>
@@ -43,7 +43,7 @@
                         </td>
                         <td> -->
 
-                        <!-- 
+                    <!-- 
                             <div class="centrarBody">
                                 <div>
                                     <label>Paquete: </label>
@@ -51,8 +51,8 @@
                                 </div>
                             </div>
     -->
-                        <!-- Modal para Colaborador -->
-                        <!--  <div id="modalPaquete" class="modal">
+                    <!-- Modal para Colaborador -->
+                    <!--  <div id="modalPaquete" class="modal">
                                 <h2>Paquete</h2>
                                 <div>
                                     <%= //citas.Paquete.Nombre_Paquete %>,
@@ -77,55 +77,55 @@
 
 
                                 </div> -->
-                        <br>
-    </div>
-
-    <script>
-        document.getElementById('btnPaquete').addEventListener('click', function () {
-            document.getElementById('modalPaquete').style.display = 'block';
-        });
-        function cerrarModal(idModal) {
-
-            document.getElementById('modalPaquete').style.display = 'none';
-        };
-
-
-    </script>
-    </td>
-    <td>
-        <a href="/citas/edit/<%= citas._id %>">
-            <button class="fondoOro">Editar</button>
-        </a>
-        <br>
-       <form id="deleteForm" data-cita-id="<%= citas._id %>" class="position-relative">
-    <button class="fondoVino" type="button" onclick="eliminarCita()">Eliminar</button>
-</form>
+                    <br>
+</div>
 
 <script>
-   function eliminarCita() {
-    const citaId = document.getElementById('deleteForm').getAttribute('data-cita-id');
-
-    fetch(`/eliminar/${citaId}`, {
-        method: 'DELETE',
-    })
-    .then(response => {
-        if (response.ok) {
-            // La eliminación fue exitosa, puedes redirigir o hacer lo que necesites.
-            window.location.reload(); // Recargar la página
-        } else {
-            console.error('Error al eliminar la cita');
-            window.location.reload();
-        }
-    })
-    .catch(error => {
-        console.error('Error de red:', error);
+    document.getElementById('btnPaquete').addEventListener('click', function () {
+        document.getElementById('modalPaquete').style.display = 'block';
     });
-}
+    function cerrarModal(idModal) {
+
+        document.getElementById('modalPaquete').style.display = 'none';
+    };
+
 
 </script>
-    </td>
-    </tr>
-    <% }); %>
-        </tbody>
-        </table>
-        </div>
+</td>
+<td>
+    <a href="/citas/edit/<%= citas._id %>">
+        <button class="fondoOro">Editar</button>
+    </a>
+    <br>
+    <form id="deleteForm" data-cita-id="<%= citas._id %>" class="position-relative">
+        <button class="fondoVino" type="button" onclick="eliminarCita()">Eliminar</button>
+    </form>
+
+    <script>
+        function eliminarCita() {
+            const citaId = document.getElementById('deleteForm').getAttribute('data-cita-id');
+
+            fetch(`/eliminar/${citaId}`, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // La eliminación fue exitosa, puedes redirigir o hacer lo que necesites.
+                        window.location.reload(); // Recargar la página
+                    } else {
+                        console.error('Error al eliminar la cita');
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error de red:', error);
+                });
+        }
+
+    </script>
+</td>
+</tr>
+<% }); %>
+    </tbody>
+    </table>
+    </div>
