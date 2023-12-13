@@ -1,10 +1,5 @@
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2"></h1>
-    <div class="btn-toolbar mb-2 mb-md 0">
-        <div class="btn-group me-2">
-            <button class="btn btn-sm btn-outline-secondary">?</button>
-        </div>
-    </div>
+    <h1 class="REtirar Insumos"></h1>
 </div>
 
 <form action="/addInsumo" method="POST">
@@ -15,14 +10,15 @@
                 placeholder="Unidades_Retiradas" required>
         </div>
         <div class="col">
-            <label for="CAMBIAR AQUI">CAMBIAR AQUI</label>
-            <input type="text" class="form-control" id="CAMBIAR AQUI" name="CAMBIAR AQUI" value="CAMBIAR AQUI"
-                placeholder="CAMBIAR AQUI" required>
+            <label for="producto">Seleccionar Producto</label>
+            <select class="form-control" id="producto" name="producto" required>
+                <!-- Aquí se mostrarán las opciones de productos -->
+                <% productos.forEach(producto => { %>
+                    <option value="<%= producto._id %>"><%= producto.nombre %></option>
+                <% }); %>
+            </select>
         </div>
     </div>
-
-
-
 
     <div class="form-group mb-4">
         <button type="submit" class="btn btn-primary">Añadir Venta</button>
