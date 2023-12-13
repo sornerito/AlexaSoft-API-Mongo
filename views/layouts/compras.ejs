@@ -1,4 +1,4 @@
-<h1>Configuración</h1>
+<h1>Compras</h1>
 
 <div>
     <table class="tablaEstilo" border="1">
@@ -13,30 +13,78 @@
             </tr>
         </thead>
         <tbody>
-            <% datos.forEach(compra=> { %>
+            <% datos.forEach(compras=> { %>
                 <tr>
                     <td>
-                        <%= compra.fecha_compra %>
+                        <%= compras.Fecha_Compra %>
+                    </td>
+                    <td>    
+                        <div class="centrarBody">
+                            <div>
+                                <label> </label>
+                                <button id="btnProductos"> VER producto</button>
+                            </div>
+                        </div>
+
+                        <!-- Modal para Colaborador -->
+                        <div id="modalProductos" class="modal">
+                            <h2>productos</h2>
+                            <div>
+                                <%= compras.Productos.Nombre_Producto %>,
+                                    <%= compras.Productos.Unidades_Compradas %>,
+                            </div>
+                            <br>
+                            <button onclick="cerrarModal('modalProductos')" class="fondoVino">Cerrar</button>
+                        </div>
+                        <script>
+                            document.getElementById('btnProductos').addEventListener('click', function () {
+                                document.getElementById('modalProductos').style.display = 'block';
+                            });
+                            function cerrarModal(idModal){
+                                
+                                document.getElementById('modalProductos').style.display = 'none';};
+                        </script>
+                    </td>
+                    <td>    
+                        <div class="centrarBody">
+                            <div>
+                                <label> </label>
+                                <button id="btnProveedor"> VER proveedor</button>
+                            </div>
+                        </div>
+
+                        <!-- Modal para Colaborador -->
+                        <div id="modalProveedor" class="modal">
+                            <h2>proveedor</h2>
+                            <div>
+                               Nombre: <%= compras.Proveedor.Nombre_Proveedor %>,
+                                 Descripcion:   <%= compras.Proveedor.Descripcion %>,
+                                     Telefono:    <%= compras.Proveedor.Telefono %>,
+                            </div>
+                            <br>
+                            <button onclick="cerrarModal('modalProveedor')" class="fondoVino">Cerrar</button>
+                        </div>
+                        <script>
+                            document.getElementById('btnProveedor').addEventListener('click', function () {
+                                document.getElementById('modalProveedor').style.display = 'block';
+                            });
+                            function cerrarModal(idModal){
+                                
+                                document.getElementById('modalProveedor').style.display = 'none';};
+                        </script>
                     </td>
                     <td>
-                        <%= compra.productos.Nombre_Producto %>
+                        <%= compras.Precio %>
                     </td>
                     <td>
-                        <%= compra.proveedor.Nombre_Proveedor %>
+                        <%= compras.Motivo_Anular %>
                     </td>
                     <td>
-                        <%= compra.precio %>
-                    </td>
-                    <td>
-                        <%= compra.Motivo_Anular %>
-                    </td>
-                    <td>
- 
-                        <a href="/compras/edit/<%= compra._id %>">
+                        <a href="/compras/edit/<%= compras._id %>">
                             <button class="fondoOro">Editar</button>
                         </a>
                         <br>
-                        <form action="/compras/delete/<%= compra._id %>" method="POST">
+                        <form action="/compras/delete/<%= compras._id %>" method="POST">
                             <button type="submit" class="fondoVino">Eliminar</button>
 
                         </form>
