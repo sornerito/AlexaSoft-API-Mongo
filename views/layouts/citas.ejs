@@ -1,104 +1,131 @@
-<h1>Citas</h1>
-
-<div class="centrarBody">
-    <table class="tablaEstilo" border="1">
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Detalles</th>
-                <th>Estado</th>
-                <th>Motivo Cancelacion</th>
-                <th>Horario</th>
-                <th>Cliente</th>
-                <th>Paquete</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% datos.forEach(citas=> { %>
+    <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Citas</h1>
+        <div class="btn-toolbar mb-2 mb-md 0">
+            <div class="btn-group me-2">
+                <a href="/addCitas" class="btn btn-sm btn-outline-secondary">+ Nueva Venta</a>
+            </div>
+        </div>
+    </div>
+    <div class="centrarBody">
+        <table class="tablaEstilo" border="1">
+            <thead>
                 <tr>
-                    <td>
-                        <%= citas.Fecha %>
-                    </td>
-                    <td>
-                        <%= citas.Detalles %>
-                    </td>
-                    <td>
-                        <%= citas.Estado %>
-                    </td>
-                    <td>
-                        <%= citas.Motivo_Cancelacion %>
-                    </td>
-                    <td>
-                        <%= citas.Horario.NombreDia %>
-                    </td>
-                    <td>
-                        <%= citas.Cliente.Nombre_Cliente %>
-                    </td>
-                    <td>
-
-
-                        <div class="centrarBody">
-                            <div>
-                                <label>Paquete: </label>
-                                <button id="btnPaquete"> VER Paquete</button>
-                            </div>
-                        </div>
-
-                        <!-- Modal para Colaborador -->
-                        <div id="modalPaquete" class="modal">
-                            <h2>Paquete</h2>
-                            <div>
-                                <%= citas.Paquete.Nombre_Paquete %>,
-                                    <%= citas.Paquete.Descripcion_Paquete %>,
-                                        <%= citas.Paquete.Tiempo_Minutos_Paquete %> minutos,
-                                            <% citas.Paquete.Servicios.forEach(servicio=> { %>
-                                                <div>
-                                                    <br>
-                                                    Servicio: <%= servicio.Nombre_Servicio %>,
-                                                        Descripcion: <%= servicio.Descripcion_Servicio %>,
-                                                            Tiempo: <%= servicio.Tiempo_Minutos %> minutos,
-                                                                <% servicio.Productos.forEach(producto=> { %>
-                                                                    <div>
-                                                                        Nombre: <%= producto.Nombre_Producto %>,
-                                                                            Cantidad: <%= producto.Cantidad %>,
-                                                                                Unidad_Medida: <%=
-                                                                                    producto.Unidad_Medida %>
-                                                                    </div>
-                                                                    <% }); %>
-                                                </div>
-                                                <% }); %>
-
-
-                            </div>
-                            <br>
-                            <button onclick="cerrarModal('modalPaquete')" class="fondoVino">Cerrar</button>
-                        </div>
-
-                        <script>
-                            document.getElementById('btnPaquete').addEventListener('click', function () {
-                                document.getElementById('modalPaquete').style.display = 'block';
-                            });
-                            function cerrarModal(idModal){
-                                
-                                document.getElementById('modalPaquete').style.display = 'none';};
-                        
-                            
-                        </script>
-                    </td>
-                    <td>
-                        <a href="/citas/edit/<%= citas._id %>">
-                            <button class="fondoOro">Editar</button>
-                        </a>
-                        <br>
-                        <form action="/citas/delete/<%= citas._id %>" method="POST">
-                            <button type="submit" class="fondoVino">Eliminar</button>
-
-                        </form>
-
-                    </td>
+                    <th>Fecha</th>
+                    <th>Detalles</th>
+                    <th>Estado</th>
+                    <th>Motivo Cancelacion</th>
+                    <th>Horario</th>
+                    <th>Cliente</th>
+                    <th>Paquete</th>
+                    <th>Acciones</th>
                 </tr>
-                <% }); %>
+            </thead>
+            <tbody>
+                <% datos.forEach(citas=> { %>
+                    <tr>
+                        <td>
+                            <%= citas.Fecha %>
+                        </td>
+                        <td>
+                            <%= citas.Detalles %>
+                        </td>
+                        <td>
+                            <%= citas.Estado %>
+                        </td>
+                        <!--    <td>
+                            <%=// citas.Motivo_Cancelacion %>
+                        </td>
+                        <td>
+                            <%= //citas.Horario.NombreDia %>
+                        </td>
+                        <td>
+                            <%=// citas.Cliente.Nombre_Cliente %>
+                        </td>
+                        <td> -->
+
+                        <!-- 
+                            <div class="centrarBody">
+                                <div>
+                                    <label>Paquete: </label>
+                                    <button id="btnPaquete"> VER Paquete</button>
+                                </div>
+                            </div>
+    -->
+                        <!-- Modal para Colaborador -->
+                        <!--  <div id="modalPaquete" class="modal">
+                                <h2>Paquete</h2>
+                                <div>
+                                    <%= //citas.Paquete.Nombre_Paquete %>,
+                                        <%= //citas.Paquete.Descripcion_Paquete %>,
+                                            <%= //citas.Paquete.Tiempo_Minutos_Paquete %> minutos,
+                                                <% //citas.Paquete.Servicios.forEach(servicio=> { %>
+                                                    <div>
+                                                        <br>
+                                                        Servicio: <%= //servicio.Nombre_Servicio %>,
+                                                            Descripcion: <%=// servicio.Descripcion_Servicio %>,
+                                                                Tiempo: <%= //servicio.Tiempo_Minutos %> minutos,
+                                                                    <% //servicio.Productos.forEach(producto=> { %>
+                                                                        <div>
+                                                                            Nombre: <%= //producto.Nombre_Producto %>,
+                                                                                Cantidad: <%= //producto.Cantidad %>,
+                                                                                    Unidad_Medida: <%=
+                                                                                    //  producto.Unidad_Medida %>
+                                                                        </div>
+                                                                    <% //}); %>
+                                                    </div>
+                                                <% //}); %>
+
+
+                                </div> -->
+                        <br>
+    </div>
+
+    <script>
+        document.getElementById('btnPaquete').addEventListener('click', function () {
+            document.getElementById('modalPaquete').style.display = 'block';
+        });
+        function cerrarModal(idModal) {
+
+            document.getElementById('modalPaquete').style.display = 'none';
+        };
+
+
+    </script>
+    </td>
+    <td>
+        <a href="/citas/edit/<%= citas._id %>">
+            <button class="fondoOro">Editar</button>
+        </a>
+        <br>
+       <form id="deleteForm" data-cita-id="<%= citas._id %>" class="position-relative">
+    <button class="fondoVino" type="button" onclick="eliminarCita()">Eliminar</button>
+</form>
+
+<script>
+   function eliminarCita() {
+    const citaId = document.getElementById('deleteForm').getAttribute('data-cita-id');
+
+    fetch(`/eliminar/${citaId}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (response.ok) {
+            // La eliminación fue exitosa, puedes redirigir o hacer lo que necesites.
+            window.location.reload(); // Recargar la página
+        } else {
+            console.error('Error al eliminar la cita');
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error de red:', error);
+    });
+}
+
+</script>
+    </td>
+    </tr>
+    <% }); %>
         </tbody>
-    </table>
-</div>
+        </table>
+        </div>
