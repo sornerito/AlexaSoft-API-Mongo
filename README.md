@@ -12,22 +12,22 @@ API © Copyright AlexaSoft
 
 
 # Dejenme guardar esto por aca 
-# <div class="navbar-links">
-#    <% if (!locals.req.session.idUsuario) { %>
-#        <a href="/login">Iniciar Sesión</a>
-#        <a href="/registro">Registrar</a>
-#    <% } else { %>
-#        <a href="/cerrarsesion">Cerrar Sesión</a>
-#       <div class="dropdown">
-#            <button>Opciones</button>
-#            <div class="dropdown-content">
-#                <a href="/admin">Admin</a>
-#                <a href="/citas">Citas</a>
-#                <a href="/ventas">Ventas</a>
-#                <a href="/compras">Compras</a>
-#                <a href="/salidainsumos">Salida Insumos</a>
-#                <a href="/usuarios">Usuarios</a>
-#            </div>
-#        </div>
-#    <% } %>
-# </div>
+<!-- <div class="navbar-links">
+    <% // if (!locals.req.session.idUsuario) { %>
+        <a href="/login">Iniciar Sesión</a>
+        <a href="/registro">Registrar</a>
+    <% // } else { %>
+        <a href="/cerrarsesion">Cerrar Sesión</a>
+        <div class="dropdown">
+            <button>Opciones</button>
+            <div class="dropdown-content">
+                <a href="/admin">Admin</a>
+                <a href="/citas">Citas</a>
+                <a href="/ventas">Ventas</a>
+                <a href="/compras">Compras</a>
+                <a href="/salidainsumos">Salida Insumos</a>
+                <a href="/usuarios">Usuarios</a>
+            </div>
+        </div>
+    <% // } %>
+</div> -->
