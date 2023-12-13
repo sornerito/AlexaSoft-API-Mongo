@@ -17,8 +17,8 @@ const ventaSchema = new Schema({
         Estado: String
     },
     Cotizacion: {
-        Fecha_Creacion: Date,
-        Fecha_Finalizacion: Date,
+        Fecha_Creacion: String,
+        Fecha_Finalizacion: String,
         Estado: String
     },
     //     Cliente: {

@@ -52,10 +52,13 @@ exports.addVentas = async (req, res) => {
 
 exports.postVentas = async (req, res) => {
 
-  const { nombreColaborador, cedulaColaborador, estado } = req.body;
+  const { nombreColaborador, cedulaColaborador } = req.body;
 
 
   const fechaActual = new Date();
+  const fechaCotizacion = fechaActual
+    .toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    .replace(/\//g, '-');
   const fechaFormateada = fechaActual
     .toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
     .replace(/\//g, '');
@@ -85,8 +88,8 @@ exports.postVentas = async (req, res) => {
       Estado: 'Activo'
     },
     Cotizacion: {
-      Fecha_Creacion: new Date(),
-      Fecha_Finalizacion: new Date(),
+      Fecha_Creacion: fechaCotizacion,
+      Fecha_Finalizacion: fechaCotizacion,
       Estado: 'Espera'
       //   Cliente: {
       //     Nombre_Cliente: req.body.Nombre_Cliente,
