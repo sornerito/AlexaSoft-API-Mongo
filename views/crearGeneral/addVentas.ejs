@@ -1,3 +1,33 @@
+<style>
+    /* Estilo para el modal */
+    #modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    /* Estilo para cerrar el modal */
+    #close-modal {
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+</style>
+
+<!-- Header INFO -->
 <div>
     <h1>Ventas</h1>
     <div>
@@ -17,6 +47,16 @@
                 <option value="Maria" data-cedula="538517897">Maria</option>
                 <option value="Camila" data-cedula="923120102">Camila</option>
                 <option value="Carlos" data-cedula="891520888">Carlos</option>
+            </select>
+        </div>
+        <div>
+            <label>Cotización: </label>
+            <select name="nombreCliente" id="nombreCliente">
+                <option value="" selected disabled>Selecciona un cliente</option>
+                <option value="">Juan</option>
+                <option value="">Maria</option>
+                <option value="">Camila</option>
+                <option value="">Carlos</option>
             </select>
         </div>
         <button class="fondoOro" onclick="enviarFormulario()">Registrar</button>
