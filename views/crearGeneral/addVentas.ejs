@@ -8,12 +8,18 @@
 </div>
 
 <div class="centrarBody">
-    <form method="POST" id="formulario">
+    <form action="/postVentas" method="POST" id="formulario">
         <div>
             <label>Colaborador: </label>
-            <input type="text" name="Nombre_Colaborador" id="Nombre_Colaborador">
+            <select name="nombreColaborador" id="nombreColaborador">
+                <option value="" selected disabled>Selecciona un colaborador</option>
+                <option value="Juan" data-cedula="734253951">Juan</option>
+                <option value="Maria" data-cedula="538517897">Maria</option>
+                <option value="Camila" data-cedula="923120102">Camila</option>
+                <option value="Carlos" data-cedula="891520888">Carlos</option>
+            </select>
         </div>
-        <button id="botonRegistro" class="fondoOro">Registrar</button>
+        <button class="fondoOro" onclick="enviarFormulario()">Registrar</button>
     </form>
 </div>
 
@@ -37,31 +43,20 @@
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('formulario').addEventListener('submit', function (event) {
-            // Evitar que el formulario se envíe de forma predeterminada
-            event.preventDefault();
+    // Función para establecer la cédula y enviar el formulario
+    function enviarFormulario() {
+        const nombreColaboradorSelect = document.getElementById('nombreColaborador');
+        const cedulaColaborador = nombreColaboradorSelect.options[nombreColaboradorSelect.selectedIndex].getAttribute('data-cedula');
 
-            // Obtener los datos del formulario
-            var formData = new FormData(this);
-            formData.forEach((value, key) => {
-                console.log(key, value);
-            });
+        // Añade la cédula al formulario
+        const formulario = document.getElementById('formulario');
+        const cedulaInput = document.createElement('input');
+        cedulaInput.type = 'hidden';
+        cedulaInput.name = 'cedulaColaborador';
+        cedulaInput.value = cedulaColaborador;
+        formulario.appendChild(cedulaInput);
 
-            fetch('/postVentas', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json()) // Cambia a response.text() si esperas HTML o texto
-                .then(data => {
-                    // Manejar la respuesta del servidor si es necesario
-                    console.log(data);
-                })
-                .catch(error => {
-                    // Manejar errores si es necesario
-                    console.error(error);
-                });
-        });
-    });
-
+        // Envía el formulario
+        formulario.submit();
+    }
 </script>

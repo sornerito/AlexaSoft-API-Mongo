@@ -51,6 +51,10 @@ exports.addVentas = async (req, res) => {
  */
 
 exports.postVentas = async (req, res) => {
+
+  const { nombreColaborador, cedulaColaborador, estado } = req.body;
+
+
   const fechaActual = new Date();
   const fechaFormateada = fechaActual
     .toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })
@@ -76,30 +80,30 @@ exports.postVentas = async (req, res) => {
     numeroFactura: numFac,
     Fecha: new Date(),
     Colaborador: {
-      Nombre_Colaborador: Nombre_Colaborador,
-      //  Cedula: req.body.Cedula,
-      //  Estado: req.body.Estado
+      Nombre_Colaborador: nombreColaborador,
+      Cedula: cedulaColaborador,
+      Estado: 'Activo'
     },
-    // Cotizacion: {
-    //   Fecha_Creacion: req.body.Fecha_Creacion,
-    //   Fecha_Finalizacion: req.body.Fecha_Finalizacion,
-    //   Estado: req.body.Estado,
-    //   Cliente: {
-    //     Nombre_Cliente: req.body.Nombre_Cliente,
-    //     Cedula: req.body.Cedula,
-    //     Correo: req.body.Correo,
-    //     Telefono: req.body.Telefono
-    //   },
-    //   Detalles_Cotizacion: {
-    //     Productos: [{
-    //       Nombre_Producto: req.body.Nombre_Producto,
-    //       Precio: req.body.Precio,
-    //       Unidades: req.body.Unidades,
-    //       Subtotal: req.body.Subtotal
-    //     }]
-    //   },
-    //   Total: req.body.Total
-    // }
+    Cotizacion: {
+      Fecha_Creacion: new Date(),
+      Fecha_Finalizacion: new Date(),
+      Estado: 'Espera'
+      //   Cliente: {
+      //     Nombre_Cliente: req.body.Nombre_Cliente,
+      //     Cedula: req.body.Cedula,
+      //     Correo: req.body.Correo,
+      //     Telefono: req.body.Telefono
+      //   },
+      //   Detalles_Cotizacion: {
+      //     Productos: [{
+      //       Nombre_Producto: req.body.Nombre_Producto,
+      //       Precio: req.body.Precio,
+      //       Unidades: req.body.Unidades,
+      //       Subtotal: req.body.Subtotal
+      //     }]
+      //   },
+      //   Total: req.body.Total
+    },
     redirect: "/ventas"
   });
 

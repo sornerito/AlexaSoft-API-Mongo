@@ -21,9 +21,10 @@
                 <th scope="col">Numero Factura</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Colaborador</th>
-                <!-- <th scope="col">Estado</th>
-                <th scope="col">Cotizacion Fecha</th>
-                <th scope="col">Cliente</th>
+                <th scope="col">Cedula</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Cotizacion Fechas y Estado</th>
+                <!--<th scope="col">Cliente</th>
                 <th scope="col">Detalles Cotizacion</th> -->
                 <th scope="col" class="text-end">Opciones</th>
             </tr>
@@ -41,13 +42,19 @@
                     <td>
                         <%= element.Colaborador.Nombre_Colaborador %>
                     </td>
+                    <td>
+                        <%= element.Colaborador.Cedula %>
+                    </td>
+                    <td>
+                        <%= element.Colaborador.Estado %>
+                    </td>
+                    <td>
+                        <%= "Fecha Creacion: " + element.Cotizacion.Fecha_Creacion %>
+                            <%= "Fecha Finalización: " + element.Cotizacion.Fecha_Finalizacion %>
+                                <%= "Estado Cotización: " + element.Cotizacion.Estado %>
+                    </td>
+
                     <!--<td>
-                        <%= // element.Colaborador.Estado %>
-                    </td>
-                    <td>
-                        <%= //element.Cotizacion.Fecha_Creacion %>
-                    </td>
-                    <td>
                         <%= // element.Cotizacion.Cliente.Nombre_Cliente %>
                     </td>
                     <td>
