@@ -19,48 +19,38 @@ const ventaSchema = new Schema({
     Cotizacion: {
         Fecha_Creacion: String,
         Fecha_Finalizacion: String,
-        Estado: String
+        Estado: String,
+        Cliente: {
+            Nombre_Cliente: String,
+            Cedula: Number,
+            Correo: String,
+            Telefono: Number
+
+            //     Detalles_Cotizacion: {
+            //         Productos: [{
+            //             Nombre_Producto: {
+            //                 type: String,
+            //                 required: true
+            //             },
+            //             Precio: {
+            //                 type: Number,
+            //                 required: true
+            //             },
+            //             Unidades: {
+            //                 type: Number,
+            //                 required: true
+            //             },
+            //             Subtotal: {
+            //                 type: Number,
+            //                 required: true
+            //             }
+            //         }]
+            //     },
+            //     Total: {
+            //         type: Number
+            //     },
+        }
     },
-    //     Cliente: {
-    //         Nombre_Cliente: {
-    //             type: String,
-    //             required: true
-    //         },
-    //         Cedula: {
-    //             type: String,
-    //             required: true
-    //         },
-    //         Correo: {
-    //             type: String
-    //         },
-    //         Telefono: {
-    //             type: String
-    //         }
-    //     },
-    //     Detalles_Cotizacion: {
-    //         Productos: [{
-    //             Nombre_Producto: {
-    //                 type: String,
-    //                 required: true
-    //             },
-    //             Precio: {
-    //                 type: Number,
-    //                 required: true
-    //             },
-    //             Unidades: {
-    //                 type: Number,
-    //                 required: true
-    //             },
-    //             Subtotal: {
-    //                 type: Number,
-    //                 required: true
-    //             }
-    //         }]
-    //     },
-    //     Total: {
-    //         type: Number
-    //     },
-    // },
 });
 
 const modelVentas = mongoose.model('ventas', ventaSchema);

@@ -52,7 +52,7 @@ exports.addVentas = async (req, res) => {
 
 exports.postVentas = async (req, res) => {
 
-  const { nombreColaborador, cedulaColaborador } = req.body;
+  const { nombreColaborador, cedulaColaborador, nombreCliente } = req.body;
 
 
   const fechaActual = new Date();
@@ -90,13 +90,13 @@ exports.postVentas = async (req, res) => {
     Cotizacion: {
       Fecha_Creacion: fechaCotizacion,
       Fecha_Finalizacion: fechaCotizacion,
-      Estado: 'Espera'
-      //   Cliente: {
-      //     Nombre_Cliente: req.body.Nombre_Cliente,
-      //     Cedula: req.body.Cedula,
-      //     Correo: req.body.Correo,
-      //     Telefono: req.body.Telefono
-      //   },
+      Estado: 'Espera',
+      Cliente: {
+        Nombre_Cliente: nombreCliente,
+        //     Cedula: req.body.Cedula,
+        //     Correo: req.body.Correo,
+        //     Telefono: req.body.Telefono
+      },
       //   Detalles_Cotizacion: {
       //     Productos: [{
       //       Nombre_Producto: req.body.Nombre_Producto,
@@ -115,5 +115,30 @@ exports.postVentas = async (req, res) => {
     res.redirect("/ventas");
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.borrarVentas = async (req, res) => {
+  const locals = {
+    title: 'AlexaSoft | Ventas',
+    description: 'Página Ventas',
+    req: req
+  };
+
+  const idVentas = req.params.id;
+  console.log("ID DE CONTROLADOR", idVentas)
+
+  try {
+    const ventas = await MongoClient.connect(uri);
+    const result = await ventas.db("ALEXASOFT").collection("ventas").deleteOne({ _id: new ObjectId(idVentas) });
+
+    if (result.deletedCount === 1) {
+      res.redirect("/ventas");
+    } else {
+      res.status(404).send("Venta no encontrada");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al eliminar la venta");
   }
 };

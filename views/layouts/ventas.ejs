@@ -23,7 +23,8 @@
                 <th scope="col">Cedula</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Cotizacion Fechas y Estado</th>
-                <!--<th scope="col">Cliente</th>
+                <th scope="col">Cliente</th>
+                <!-- <th scope="col">Cliente</th>
                 <th scope="col">Detalles Cotizacion</th> -->
                 <th scope="col" class="text-end">Opciones</th>
             </tr>
@@ -53,10 +54,10 @@
                                 <%= "Estado Cotización: " + element.Cotizacion.Estado %>
                     </td>
 
-                    <!--<td>
-                        <%= // element.Cotizacion.Cliente.Nombre_Cliente %>
+                     <td>
+                        <%= element.Cotizacion.Cliente.Nombre_Cliente %>
                     </td>
-                    <td>
+                    <!--<td>
                         <% // element.Cotizacion.Detalles_Cotizacion.Productos.forEach(producto=> { %>
                             <div>
                                 Nombre: <%= // producto.Nombre_Producto %>,
@@ -70,9 +71,31 @@
                         <a href="/views/edit/<%= element._id %>" class="clickeable fondoOro bordeOro custom-button">
                             <button class="fondoOro bordeOro clickeable">Editar</button>
                         </a><br><br>
-                        <form action="/edit/delete/<%= element._id %>" method="POST">
-                            <button type="submit" class="fondoVino bordeVino clickeable custom-button">Eliminar</button>
+                        <form data-venta-id="<%= element._id %>" class="position-relative">
+                            <button type="button" class="fondoVino bordeVino clickeable custom-button"
+                                onclick="eliminarVenta('<%= element._id %>')">Eliminar</button>
                         </form>
+
+                        <script>
+                            function eliminarVenta(ventaId) {
+                                console.log("ID DE VENTAS EJS", ventaId)
+
+                                fetch(`/eliminar/${ventaId}`, {
+                                    method: 'DELETE',
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            window.location.reload();
+                                        } else {
+                                            console.error('Error al eliminar la venta');
+                                            window.location.reload();
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error de red:', error);
+                                    });
+                            }
+                        </script>
                     </td>
                 </tr>
                 <% }) %>

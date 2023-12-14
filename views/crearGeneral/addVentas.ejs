@@ -32,7 +32,7 @@
     <h1>Ventas</h1>
     <div>
         <div class="botonInfo">
-            <button id="btnInfo">Info</button>
+            <button id="btnInfo" class="clickeable fondoVino bordeVino custom-button">Info</button>
         </div>
     </div>
 </div>
@@ -53,13 +53,13 @@
             <label>Cotización: </label>
             <select name="nombreCliente" id="nombreCliente">
                 <option value="" selected disabled>Selecciona un cliente</option>
-                <option value="">Juan</option>
-                <option value="">Maria</option>
-                <option value="">Camila</option>
-                <option value="">Carlos</option>
+                <option value="Juan Alberto">Juan Alberto</option>
+                <option value="Jose Jose">Jose Jose</option>
+                <option value="Camila Vergara">Camila Vergara</option>
+                <option value="Carlos Segundo">Carlos Segundo</option>
             </select>
         </div>
-        <button class="fondoOro" onclick="enviarFormulario()">Registrar</button>
+        <button class="clickeable fondoOro bordeOro custom-button" onclick="enviarFormulario()">Registrar</button>
     </form>
 </div>
 
@@ -85,6 +85,8 @@
 
     // Función para establecer la cédula y enviar el formulario
     function enviarFormulario() {
+        const nombreClienteSelect = document.getElementById('nombreCliente');
+
         const nombreColaboradorSelect = document.getElementById('nombreColaborador');
         const cedulaColaborador = nombreColaboradorSelect.options[nombreColaboradorSelect.selectedIndex].getAttribute('data-cedula');
 
