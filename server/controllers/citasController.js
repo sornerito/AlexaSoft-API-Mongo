@@ -26,44 +26,60 @@ exports.verCitas = async (req, res) => {
 };// Fin funcion
 
 exports.addCitas = async (req, res) => {
-
-    const locals = {
-        title: 'AlexaSoft | Citas Añadir',
-        description: 'Página Citas Añadir',
-    };
-
-    res.render("crearGeneral/addCitas", locals);
-};
+    try {
+        // Obtén la lista de usuarios desde la base de datos
+        const usuarios = await usuario.find({}, 'Nombre_Usuario'); // Ajusta los campos según tu modelo
+  
+        const locals = {
+            title: 'AlexaSoft | Citas Añadir',
+            description: 'Página Citas Añadir',
+            req: req,
+            usuarios: usuarios // Pasa la lista de usuarios al contexto de la vista
+        };
+  
+        res.render('crearGeneral/addCitas', locals);
+    } catch (error) {
+        console.error(error);
+        // Maneja el error de manera adecuada, por ejemplo, redirigiendo a una página de error.
+        res.status(500).send('Error interno del servidor');
+    }
+    
+  };
 
 
 const modelCitas = require('../models/modelCitas');
+const usuario = require("../models/modelConfiguracion");
 
 
 exports.postCitas = async (req, res) => {
     
     
+    console.log(req.body); // Agregar esta línea para imprimir los datos recibidos
 
-    const { fecha, detalles, numeroDia } = req.body;
+    const { fecha, detalles, numeroDia, estado, mCancelacion, cedula, correo, telefono, nombre } = req.body;
+    console.log(cedula)
+    console.log(nombre)
+    console.log(telefono)
+    console.log(correo)
 
-        
-        const nuevaCita = new modelCitas({
-            Fecha: fecha,
-            Detalles: detalles,
-            Estado: 'espera',
-            Motivo_Cancelacion: '',
-            Horario: {
-                NumeroDia: numeroDia,
-                Inicio_Jornada: '08:30',
-                Fin_Jornada: '17:00',
-                Estado_Horario: 'Activo'
-            },
-           /* Cliente:{
-                Nombre_Cliente: data.Nombre_Cliente,
-                Cedula: data.Cedula,
-                Correo: data.Correo,
-                Telefono: data.Telefono
-            },
-            Paquete:{
+    const nuevaCita = new modelCitas({
+        Fecha: fecha,
+        Detalles: detalles,
+        Estado: estado,
+        Motivo_Cancelacion: mCancelacion,
+        Horario: {
+            NumeroDia: numeroDia,
+            Inicio_Jornada: '08:30',
+            Fin_Jornada: '17:00',
+            Estado_Horario: 'Activo'
+        },
+        Cliente: {
+            Nombre_Cliente: nombre,
+            Cedula: cedula,
+            Correo: correo,
+            Telefono: telefono
+        },
+           /* Paquete:{
                 Nombre_Paquete: data.Nombre_Paquete,
                 Descripcion_Paquete: data.Descripcion_Paquete,
                 Tiempo_Minutos_Paquete: data.Tiempo_Minutos_Paquete,

@@ -22,11 +22,41 @@
           <option value="Lunes" selected>Lunes</option>
           <option value="Martes">Martes</option>
           <option value="Miercoles">Miercoles</option>
+          <option value="Jueves">Jueves</option>
+          <option value="Viernes">Viernes</option>
       </select>
   </div>
+  <div class="mb-3">
+    <label for="estado" class="col-form-label">Estado</label>
+    <select class="form-select" aria-label="Default select example" id="estado" name="estado" required>
+        <option value="Espera" selected>Espera</option>
+    </select>
+  </div>
+  <div class="mb-3" >
+    <label for="mCancelacion" class="col-form-label">Motivo Cancelacion</label>
+    <input type="text" pattern="[A-Za-z]+" class="form-control" id="mCancelacion" name="mCancelacion">
+  </div>
+  <div class="col">
+    <label for="producto">Seleccioa Usuario</label>
+    <div class="col">
+      <label for="usuario">Selecciona Usuario</label>
+      <select class="form-control" id="nombre" name="nombre" required>
+          <!-- Aquí se mostrarán las opciones de usuarios -->
+          <% usuarios.forEach(usuario => { %>
+              <option value="<%= usuario.Nombre_Usuario %>"
+                      data-cedula="<%= usuario.Cedula %>"
+                      data-correo="<%= usuario.Correo %>"
+                      data-telefono="<%= usuario.Telefono %>">
+                  <%= usuario.Nombre_Usuario %>
+              </option>
+          <% }); %>
+      </select>
+      
+     
+  </div>
+  
+</div>
 
-    
-    
     <button id="botonRegistro">Crear Cuenta</button>
 </form>
 

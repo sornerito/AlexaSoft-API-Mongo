@@ -41,7 +41,7 @@ const citasSchema = new Schema({
     Motivo_Cancelacion: {
         type: String,
     },
-   /*  Horario: {
+    Horario: {
         NumberDia: {
             type: String,
         },
@@ -71,7 +71,7 @@ const citasSchema = new Schema({
             // Puedes agregar más opciones de validación aquí
         }
     },
-    Paquete: {
+   /*  Paquete: {
         Nombre_Paquete: {
             type: String,
         },

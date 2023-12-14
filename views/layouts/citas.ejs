@@ -97,32 +97,31 @@
         <button class="fondoOro">Editar</button>
     </a>
     <br>
-    <form id="deleteForm" data-cita-id="<%= citas._id %>" class="position-relative">
-        <button class="fondoVino" type="button" onclick="eliminarCita()">Eliminar</button>
+    <form data-citas-id="<%= citas._id %>" class="position-relative">
+        <button type="button" class="fondoVino bordeVino clickeable custom-button"
+            onclick="eliminarCitas('<%= citas._id %>')">Eliminar</button>
     </form>
 
-    <script>
-        function eliminarCita() {
-            const citaId = document.getElementById('deleteForm').getAttribute('data-cita-id');
+     <script>
+                            function eliminarCitas(citaID) {
+                                
 
-            fetch(`/eliminar/${citaId}`, {
-                method: 'DELETE',
-            })
-                .then(response => {
-                    if (response.ok) {
-                        // La eliminación fue exitosa, puedes redirigir o hacer lo que necesites.
-                        window.location.reload(); // Recargar la página
-                    } else {
-                        console.error('Error al eliminar la cita');
-                        window.location.reload();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error de red:', error);
-                });
-        }
-
-    </script>
+                                fetch(`/eliminar/cita/${citaID}`, {
+                                    method: 'DELETE',
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            window.location.reload();
+                                        } else {
+                                            console.error('Error al eliminar la cita');
+                                            window.location.reload();
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error de red:', error);
+                                    });
+                            }
+                        </script>
 </td>
 </tr>
 <% }); %>

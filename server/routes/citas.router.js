@@ -9,9 +9,9 @@ const citasController = require('../controllers/citasController')
 // Citas Routes
 
 router.get('/citas', citasController.verCitas);
-router.get("/addCitas",citasController.addCitas)
+router.get("/addCitas", citasController.addCitas);
 router.post('/addCita', citasController.postCitas)
-router.delete("/eliminar/:id", citasController.borrarCitas)
+router.delete("/eliminar/cita/:id", citasController.borrarCitas)
 
 
 
