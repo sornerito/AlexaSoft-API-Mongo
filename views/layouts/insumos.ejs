@@ -9,41 +9,39 @@
   <div class="centrarBody">
 
     <table class="tablaEstilo" border="1">
-        <thead>
+      <thead>
           <tr>
-            <th scope="col">Fecha de retiro</th>
-            <th scope="col">Unidades retiradas</th>
-            <th scope="col">Producto retirado</th>
-            <th scope="col">Motivo anular</th>
-            <th scope="col" class="text-end">Opciones</th>
+              <th scope="col">Fecha de retiro</th>
+              <th scope="col">Unidades retiradas</th>
+              <th scope="col">Producto retirado</th>
+              <th scope="col">Motivo anular</th>
+              <th scope="col" class="text-end">Opciones</th>
           </tr>
-        </thead>
-
-        <tbody>
-          <% insumos.forEach(element => { %>
-            <tr class="align-middle">
-              <td><%= element.Fecha_Retiro %></td>
-              <td><%= element.Unidades_Retiradas %></td>
-              <td>
-                <% if (element.Producto && element.Producto.nombre) { %>
-                  <%= element.Producto.nombre %>
-                <% } else { %>
-                  Sin producto asociado
+      </thead>
+  
+      <tbody>
+        <% insumos.forEach(element => { %>
+          <tr class="align-middle">
+            <td><%= element.Fecha_Retiro %></td>
+            <td><%= element.Unidades_Retiradas %></td>
+            <td>
+              <% producto.forEach(producto => { %>
+                <% if (producto._id.toString() === element.Producto.toString()) { %>
+                  <%= producto.nombre %>
                 <% } %>
-              </td>
-              <td><%= element.Motivo_Anular %></td>
-              <td>
-                <a href="/views/edit/<%= element._id %>">
-                  <button class="fondoOro">Editar</button>
-                </a>
-                <br>
-                <form action="/edit/delete/<%= element._id %>" method="POST">
-                  <button type="submit" class="fondoVino">Eliminar</button>
-                </form>
-              </td>
-            </tr>
-          <% }) %>
-        </tbody>
-        
-      </table>
+              <% }) %>
+            </td>
+            <td><%= element.Motivo_Anular %></td>
+            <td>
+              <form action="/edit/delete/<%= element._id %>" method="POST">
+                <button type="submit" class="fondoVino">Anular</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+      
+  </table>
+  
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

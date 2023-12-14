@@ -1,12 +1,12 @@
-
 const mongoose = require('mongoose');
 
 const productoSchema = new mongoose.Schema({
-  _id: String,
+  _id: mongoose.Schema.Types.ObjectId,
   nombre: String,
   unidades: Number
 });
 
-const ProductoModel = mongoose.model('Producto', productoSchema);
+const ProductoModel = mongoose.model('productos', productoSchema);
 
 module.exports = ProductoModel;
+

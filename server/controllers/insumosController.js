@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const InsumoModel = require('../models/modelInsumos');
-const ProductoModel = require('../models/modelProductos'); // Ajusta la ruta según tu estructura de archivos y modelos
+const ProductoModel = require('../models/modelProductos');
 
-const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
+
 
 exports.vistaInsumos = async (req, res) => {
   const locals = {
@@ -12,8 +12,9 @@ exports.vistaInsumos = async (req, res) => {
   };
 
   try {
-    const insumos = await InsumoModel.find().populate('Producto').exec();
-    res.render('layouts/insumos', { insumos, locals });
+    const producto = await ProductoModel.find();
+    const insumos = await InsumoModel.find();
+    res.render('layouts/insumos', { insumos, locals, producto });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error interno del servidor');
@@ -35,7 +36,6 @@ exports.addInsumo = async (req, res) => {
             req: req,
             productos: productos // Pasa la lista de productos al contexto de la vista
         };
-
         res.render('crearGeneral/addInsumos', locals);
     } catch (error) {
         console.error(error);
@@ -45,22 +45,32 @@ exports.addInsumo = async (req, res) => {
 }
 
 exports.postInsumos = async (req, res) => {
+  const fechaActual = new Date(); // Obtener la fecha actual
 
-    console.log(req.body);
-
-
+  try {
+    // Crear un nuevo retiro de insumo
     const newRetiro = new InsumoModel({
-        Unidades_Retiradas: req.body.Unidades_Retiradas,
-        CAMBIAR_AQUI: req.body.CAMBIAR_AQUI,
+      Unidades_Retiradas: req.body.Unidades_Retiradas,
+      Producto: req.body.producto,
+      Fecha_Retiro: fechaActual
     });
 
-    try {
-        await InsumoModel.create(newRetiro);
-        await req.flash('info', 'Retiro exitoso')
+    // Guardar el retiro de insumo
+    await InsumoModel.create(newRetiro);
 
-        res.redirect('insumos')
-    } catch (error) {
-        console.log(error);
-    }
+    // Actualizar el documento que coincide con el _id proporcionado
+    const resultado = await ProductoModel.updateOne(
+      { _id: req.body.producto },
+      { $inc: { unidades: -req.body.Unidades_Retiradas } }
+    );
+    console.log(resultado)
 
-}
+    res.redirect('insumos')
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error interno del servidor');
+  }
+};
+
+
+
