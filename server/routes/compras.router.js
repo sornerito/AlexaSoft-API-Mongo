@@ -6,6 +6,10 @@ const comprasController= require('../controllers/comprasController')
 
 // Abrir usuarios
 router.get("/compras", comprasController.verCompras)
+
+router.get('/addcompra', comprasController.addcompra);
+
+router.post('/addcompra', comprasController.postcompras);
     
 // Eliminar Usuario
 router.delete("/compras/delete/:id", comprasController.borrarCompra)

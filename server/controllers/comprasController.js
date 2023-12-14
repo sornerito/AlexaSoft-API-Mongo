@@ -1,5 +1,7 @@
 const { MongoClient, ObjectId } = require("mongodb");
 const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
+const comprasModel = require('../models/modelCompras');
+const ComprasModel = require('../models/modelCompras');
 
 // Renderizar configuracion
 exports.verCompras = async (req, res) => {
@@ -22,6 +24,47 @@ exports.verCompras = async (req, res) => {
         res.render("layouts/citas", { error: "Error al obtener datos de citas", locals, datos: [] });
     } finally {
         await comprasClient.close();
+    }
+
+    exports.addcompra = async (req, res) => {
+        try {
+            // Obtén la lista de productos desde la base de datos
+            const compras = await ComprasModel.find({}, 'Nombre_Producto'); // Ajusta los campos según tu modelo
+    
+            const locals = {
+                title: 'AlexaSoft | compras',
+                description: 'Página compras',
+                req: req,
+                compras: compras // Pasa la lista de productos al contexto de la vista
+            };
+    
+            res.render('crearGeneral/addcompras', locals);
+        } catch (error) {
+            console.error(error);
+            // Maneja el error de manera adecuada, por ejemplo, redirigiendo a una página de error.
+            res.status(500).send('Error interno del servidor');
+        }
+    }
+    
+    exports.postcompras = async (req, res) => {
+    
+        console.log(req.body);
+    
+    
+        const newCompra = new comprasModel({
+            Precio: req.body.Precio,
+            Motivo_Anular: req.body.Motivo_Anular,
+        });
+    
+        try {
+            await comprasModel.create(newCompra);
+            await req.flash('info', 'Compra exitoso')
+    
+            res.redirect('compras')
+        } catch (error) {
+            console.log(error);
+        }
+    
     }
 };// Fin funcion
 
