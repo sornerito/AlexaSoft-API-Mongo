@@ -12,4 +12,6 @@ router.get('/add', ventasController.addVentas);
 
 router.post('/postVentas', ventasController.postVentas);
 
+router.delete("/eliminar/:id", ventasController.borrarVentas)
+
 module.exports = router;
