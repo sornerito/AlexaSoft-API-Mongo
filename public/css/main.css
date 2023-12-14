@@ -8,24 +8,32 @@
 /*Borde vinotinto*/
 body .bordeVino {
     border: #73293D solid 3px !important;
-    border-radius: 10px !important;
+    border-radius: 4px !important;
 }
 
 /*Fondo vinotinto*/
 body .fondoVino {
     background-color: #73293D !important;
     color: white;
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
 /*Borde oro*/
 body .bordeOro {
     border: #D8B468 solid 3px !important;
-    border-radius: 10px !important;
+    border-radius: 4px !important;
 }
 
 /*Fondo oro*/
 body .fondoOro {
     background-color: #D8B468 !important;
+    color: white;
+    padding: 6px 9.9px;
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
 /*Texto oro*/

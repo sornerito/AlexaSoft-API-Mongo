@@ -7,12 +7,10 @@ const comprasController= require('../controllers/comprasController')
 // Abrir usuarios
 router.get("/compras", comprasController.verCompras)
 
-// Abrir editar usuarios
-router.get("/compras/edit/:id", comprasController.verEditarCompra)
+router.get('/addcompra', comprasController.addcompra);
 
-// Editar Usuario
-router.put("/compras/edit/:id", comprasController.editarCompra)
-
+router.post('/addcompra', comprasController.postcompras);
+    
 // Eliminar Usuario
 router.delete("/compras/delete/:id", comprasController.borrarCompra)
 

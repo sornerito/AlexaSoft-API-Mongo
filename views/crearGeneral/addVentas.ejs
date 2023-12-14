@@ -1,19 +1,65 @@
+<style>
+    /* Estilo para el modal */
+    #modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    /* Estilo para cerrar el modal */
+    #close-modal {
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+</style>
+
+<!-- Header INFO -->
 <div>
     <h1>Ventas</h1>
     <div>
         <div class="botonInfo">
-            <button id="btnInfo">Info</button>
+            <button id="btnInfo" class="clickeable fondoVino bordeVino custom-button">Info</button>
         </div>
     </div>
 </div>
 
 <div class="centrarBody">
-    <form method="POST" id="formulario">
+    <form action="/postVentas" method="POST" id="formulario">
         <div>
             <label>Colaborador: </label>
-            <input type="text" name="Nombre_Colaborador" id="Nombre_Colaborador">
+            <select name="nombreColaborador" id="nombreColaborador">
+                <option value="" selected disabled>Selecciona un colaborador</option>
+                <option value="Juan" data-cedula="734253951">Juan</option>
+                <option value="Maria" data-cedula="538517897">Maria</option>
+                <option value="Camila" data-cedula="923120102">Camila</option>
+                <option value="Carlos" data-cedula="891520888">Carlos</option>
+            </select>
         </div>
-        <button id="botonRegistro" class="fondoOro">Registrar</button>
+        <div>
+            <label>Cotización: </label>
+            <select name="nombreCliente" id="nombreCliente">
+                <option value="" selected disabled>Selecciona un cliente</option>
+                <option value="Juan Alberto">Juan Alberto</option>
+                <option value="Jose Jose">Jose Jose</option>
+                <option value="Camila Vergara">Camila Vergara</option>
+                <option value="Carlos Segundo">Carlos Segundo</option>
+            </select>
+        </div>
+        <button class="clickeable fondoOro bordeOro custom-button" onclick="enviarFormulario()">Registrar</button>
     </form>
 </div>
 
@@ -37,31 +83,22 @@
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('formulario').addEventListener('submit', function (event) {
-            // Evitar que el formulario se envíe de forma predeterminada
-            event.preventDefault();
+    // Función para establecer la cédula y enviar el formulario
+    function enviarFormulario() {
+        const nombreClienteSelect = document.getElementById('nombreCliente');
 
-            // Obtener los datos del formulario
-            var formData = new FormData(this);
-            formData.forEach((value, key) => {
-                console.log(key, value);
-            });
+        const nombreColaboradorSelect = document.getElementById('nombreColaborador');
+        const cedulaColaborador = nombreColaboradorSelect.options[nombreColaboradorSelect.selectedIndex].getAttribute('data-cedula');
 
-            fetch('/postVentas', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json()) // Cambia a response.text() si esperas HTML o texto
-                .then(data => {
-                    // Manejar la respuesta del servidor si es necesario
-                    console.log(data);
-                })
-                .catch(error => {
-                    // Manejar errores si es necesario
-                    console.error(error);
-                });
-        });
-    });
+        // Añade la cédula al formulario
+        const formulario = document.getElementById('formulario');
+        const cedulaInput = document.createElement('input');
+        cedulaInput.type = 'hidden';
+        cedulaInput.name = 'cedulaColaborador';
+        cedulaInput.value = cedulaColaborador;
+        formulario.appendChild(cedulaInput);
 
+        // Envía el formulario
+        formulario.submit();
+    }
 </script>

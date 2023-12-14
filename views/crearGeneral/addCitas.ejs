@@ -1,0 +1,122 @@
+<div>
+    <h1>Citas</h1>
+   
+</div>
+
+
+
+<form action="/addCita" method="post" id="miFormulario" >
+    <div class="mb-3">
+        <label for="fecha" class="col-form-label">Fecha:</label>
+        <!-- Quiten el pattern si no usarán el type="text" -->
+        <input type="date" class="form-control" id="fecha" name="fecha" required>
+    </div>
+    <div class="mb-3">
+        <label for="detalles" class="col-form-label">Detalle:</label>
+        <!-- Quiten el pattern si no usarán el type="text" -->
+        <input type="text" pattern="[A-Za-z]+" class="form-control" id="detalles" name="detalles" required>
+    </div>
+    <div class="mb-3">
+      <label for="numeroDia" class="col-form-label">Horario</label>
+      <select class="form-select" aria-label="Default select example" id="numeroDia" name="numeroDia" required>
+          <option value="Lunes" selected>Lunes</option>
+          <option value="Martes">Martes</option>
+          <option value="Miercoles">Miercoles</option>
+      </select>
+  </div>
+
+    
+    
+    <button id="botonRegistro">Crear Cuenta</button>
+</form>
+
+<!-- 
+<script>
+
+ document.getElementById("botonRegistro").addEventListener("click", async (e) => {
+        e.preventDefault();
+        validarFormulario()
+    })
+
+    function validarFormulario() {
+  // Deshabilitar temporalmente las validaciones predeterminadas
+
+
+
+  
+  // Validar Campo 1
+  var fecha = document.getElementById("fechaCita");
+  if (fecha.value.trim() === "") {
+    mostrarAlerta("Por favor, Ingrese la fecha");
+    return false; // Modifiquen la validación según el campo que tengan, de caso contrario dejenlo.
+  } 
+
+  // Validar Campo 2
+  var hora = document.getElementById("horaCita");
+  if (hora.value.trim() === "") {
+    mostrarAlerta("Por favor, Ingrese la hora");
+    return false; // Modifiquen la validación según el campo que tengan, de caso contrario dejenlo.
+  } 
+ 
+  // Validar Campo 3
+
+
+  var detalleCita = document.getElementById("detalleCita");
+  if (detalleCita.value.trim() === "") {
+    mostrarAlerta("Por favor, completa el campo motivo");
+    return false;
+  } else if (!/^[a-zA-Z\s]+$/.test(detalleCita.value.trim())) {
+    mostrarAlerta("Motivo: Por favor, ingrese solo letras ");
+    return false;
+  }
+
+  // Validar Campo 4
+  var estadoCita = document.getElementById("estadoCita");
+  if (hora.value.trim() === "") {
+    mostrarAlerta("Por favor, Ingrese la hora");
+    return false; // Modifiquen la validación según el campo que tengan, de caso contrario dejenlo.
+  } 
+
+
+  // Validar Campo 5 
+  var motivoCancelacion = document.getElementById("motivoCancelacion");
+  
+    // Validar Campo 6
+  var usuarioCita = document.getElementById("usuarioCita");
+
+    // Validar Campo 7
+  var paqueteCita = document.getElementById("paqueteCita");
+
+
+    // Validar Campo 8
+  var horarioCita = document.getElementById("horarioCita");
+
+
+
+   const Fecha = document.getElementById("fechaCita").value
+   const  Detalles =  document.getElementById("detalleCita").value
+   const  Estado = document.getElementById("estadoCita").value
+   const  Motivo_Cancelacion = document.getElementById("motivoCancelacion").value
+   const  Horario = document.getElementById("usuarioCita").value
+   const  Cliente = document.getElementById("paqueteCita").value
+   const  Paquete = document.getElementById("horarioCita").value
+
+    
+    document.addEventListener("DOMContentLoaded", (event) => {
+        event.preventDefault();
+        document.getElementById("formulario").reset()
+    });
+    
+}
+
+
+function mostrarAlerta(mensaje) {
+  Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: mensaje,
+  });
+}
+
+
+</script> -->

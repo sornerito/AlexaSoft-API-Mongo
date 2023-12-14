@@ -1,48 +1,89 @@
-const { MongoClient, ObjectId } = require("mongodb")
-const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/"
+const { MongoClient, ObjectId } = require("mongodb");
+const uri = "mongodb+srv://samuel:alexasoft@cluster0.dqbpzak.mongodb.net/";
+const comprasModel = require('../models/modelCompras');
+const ComprasModel = require('../models/modelCompras');
 
-//Renderizar configuracion
+// Renderizar configuracion
 exports.verCompras = async (req, res) => {
     const locals = {
-        title: 'AlexaSoft | Configuracion',
+        title: 'AlexaSoft | compras',
+        description: 'Página compras',
+        req: req
+    };
+
+    const comprasClient = new MongoClient(uri);
+
+    try {
+        await comprasClient.connect();
+        const comprasCollection = comprasClient.db("ALEXASOFT").collection("compras");
+        const comprasData = await comprasCollection.find().toArray();
+        res.render("layouts/compras", { error: "", locals, datos: comprasData });
+    } catch (error) {
+        console.error("Error al obtener datos de citas:", error);
+        // Puedes manejar el error de otra manera si es necesario
+        res.render("layouts/citas", { error: "Error al obtener datos de citas", locals, datos: [] });
+    } finally {
+        await comprasClient.close();
+    }
+
+    exports.addcompra = async (req, res) => {
+        try {
+            // Obtén la lista de productos desde la base de datos
+            const compras = await ComprasModel.find({}, 'Nombre_Producto'); // Ajusta los campos según tu modelo
+    
+            const locals = {
+                title: 'AlexaSoft | compras',
+                description: 'Página compras',
+                req: req,
+                compras: compras // Pasa la lista de productos al contexto de la vista
+            };
+    
+            res.render('crearGeneral/addcompras', locals);
+        } catch (error) {
+            console.error(error);
+            // Maneja el error de manera adecuada, por ejemplo, redirigiendo a una página de error.
+            res.status(500).send('Error interno del servidor');
+        }
+    }
+    
+    exports.postcompras = async (req, res) => {
+    
+        console.log(req.body);
+    
+    
+        const newCompra = new comprasModel({
+            Precio: req.body.Precio,
+            Motivo_Anular: req.body.Motivo_Anular,
+        });
+    
+        try {
+            await comprasModel.create(newCompra);
+            await req.flash('info', 'Compra exitoso')
+    
+            res.redirect('compras')
+        } catch (error) {
+            console.log(error);
+        }
+    
+    }
+};// Fin funcion
+
+
+/* exports.verEditarUsuario = async (req, res) => {
+    const locals = {
+        title: 'AlexaSoft | Editar Configuracion',
         description: 'Página Configuracion',
         req: req
     };
-    if (req.session.loggedin != true) {
-        res.redirect("login");
-    } else {
-        const cliente = new MongoClient(uri)
-
-        try {
-            await cliente.connect()
-            const usuarios = cliente.db("ALEXASOFT").collection("compras").find()
-            const datos = await usuarios.toArray()
-            res.render("layouts/compras", { error: "", locals, datos });
-        } catch (error) {
-
-        } finally {
-            await cliente.close()
-        }
-
-
-    }
-};//Fin funcion
-
-exports.verEditarCompra = async (req, res) => {
-    const locals = {
-        title: 'AlexaSoft | Editar compra',
-        description: 'Página compra',
-        req: req
-    };
-    const idCompra = req.params.id;
-    console.log("ID DESDE BACKEND "+idCompra)
+    const idUsuario = req.params.id;
+    console.log("ID DESDE BACKEND "+idUsuario)
     const cliente = new MongoClient(uri)
 
     try {
         await cliente.connect()
-        const compra = await cliente.db("ALEXASOFT").collection("compras").findOne({ _id: new ObjectId(idCompra) });
-        console.log(compra)
-        res.render("layouts/comprasEdit", { error: "", locals, compra });
+        const usuario = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ _id: new ObjectId(idUsuario) });
+        console.log(usuario)
+        res.render("layouts/configuracionEdit", { error: "", locals, usuario });
     } catch (error) {
         console.error(error);
     } finally {
@@ -50,11 +91,11 @@ exports.verEditarCompra = async (req, res) => {
     }
 }//fin funcion
 
-exports.editarCompra = async (req, res) => {
+exports.editarUsuario = async (req, res) => {
 
     const locals = {
-        title: 'AlexaSoft | Modificar Compra',
-        description: 'Página Modificar compra',
+        title: 'AlexaSoft | Modificar Usuario',
+        description: 'Página Modificar Usuario',
         req: req
     };
 
@@ -63,8 +104,8 @@ exports.editarCompra = async (req, res) => {
     //Datos del formulario
     const data = req.body;
     console.log("DATOS DEL FORMULARIO "+req.body);
-    //ID del la compra
-    const idCompra = req.params.id;
+    //ID del usuario
+    const idUsuario = req.params.id;
 
     // Variables definidas
     let correoActual = null;
@@ -77,7 +118,7 @@ exports.editarCompra = async (req, res) => {
         await cliente.connect()
 
         // Buscar Datos usuario actual
-        const datosUsuarioActual = await cliente.db("ALEXASOFT").collection("compras").findOne({ _id: new ObjectId(idCompra) });
+        const datosUsuarioActual = await cliente.db("ALEXASOFT").collection("configuracion").findOne({ _id: new ObjectId(idUsuario) });
 
         //Guardar valor actual para omitirlo
         correoActual = datosUsuarioActual.Correo;
@@ -93,7 +134,7 @@ exports.editarCompra = async (req, res) => {
     }
 
 
-    /*Buscar Campos Repetidos*/
+    /*Buscar Campos Repetidos
     // Variables definidas
     let correoRepetido = false;
     let instagramRepetido = false;
@@ -158,7 +199,7 @@ exports.editarCompra = async (req, res) => {
     //Variable definidas
     var permisos = [];
 
-    /*BUSCAR ROL EN COLECCION*/
+    /*BUSCAR ROL EN COLECCION
     try {
         await cliente.connect()
         const rol = await cliente.db("ALEXASOFT").collection("roles").findOne({ Nombre_Rol: "Cliente" })
@@ -175,7 +216,7 @@ exports.editarCompra = async (req, res) => {
     /*BUSCAR ROL EN COLECCION*/
 
 
-    /*ACTUALIZAR USUARIO*/
+    /*ACTUALIZAR USUARIO
     try {
         await cliente.connect()
         await cliente.db("ALEXASOFT").collection("configuracion").updateOne(
@@ -202,28 +243,28 @@ exports.editarCompra = async (req, res) => {
     } finally {
         await cliente.close()
     }
-    /*ACTUALIZAR USUARIO*/
+    /*ACTUALIZAR USUARIO
 
-}//fin funcion
+}//fin funcion*/
 
 
-exports.borrarUsuario = async (req, res) => {
+exports.borrarCompra = async (req, res) => {
     const locals = {
-        title: 'AlexaSoft | Configuracion',
-        description: 'Página Configuracion',
+        title: 'AlexaSoft | compras',
+        description: 'Página compras',
         req: req
     };
-    const idUsuario = req.params.id;
+    const idCompra = req.params.id;
 
-    const cliente = new MongoClient(uri)
+    const compras = new MongoClient(uri)
     try {
-        await cliente.connect()
-        cliente.db("ALEXASOFT").collection("configuracion").deleteOne({ _id: new ObjectId(idUsuario) });
+        await compras.connect()
+        compras.db("ALEXASOFT").collection("compras").deleteOne({ _id: new ObjectId(idCompra) });
 
         res.redirect("usuarios", { error: "", locals });
     } catch (error) {
         console.error(error);
     } finally {
-        await cliente.close()
+        await compras.close()
     }
-}//fin funcion
+}//fin funcion 

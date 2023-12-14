@@ -1,11 +1,10 @@
-<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+<div class="custom-header">
     <h1 class="h2">Ventas</h1>
-    <div class="btn-toolbar mb-2 mb-md 0">
-        <div class="btn-group me-2">
-            <a href="/add" class="btn btn-sm btn-outline-secondary">+ Nueva Venta</a>
-        </div>
+    <div class="custom-button">
+        <a href="/add">+ Nueva Venta</a>
     </div>
 </div>
+
 
 <!-- Esto no se si cambiarlo ya que esto es BOOTSTRAP SI O SI
      Estoy viendo si ahorita se podrá mostrar los mensajes de que se ha añadido bien
@@ -21,9 +20,11 @@
                 <th scope="col">Numero Factura</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Colaborador</th>
-                <!-- <th scope="col">Estado</th>
-                <th scope="col">Cotizacion Fecha</th>
+                <th scope="col">Cedula</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Cotizacion Fechas y Estado</th>
                 <th scope="col">Cliente</th>
+                <!-- <th scope="col">Cliente</th>
                 <th scope="col">Detalles Cotizacion</th> -->
                 <th scope="col" class="text-end">Opciones</th>
             </tr>
@@ -41,16 +42,22 @@
                     <td>
                         <%= element.Colaborador.Nombre_Colaborador %>
                     </td>
+                    <td>
+                        <%= element.Colaborador.Cedula %>
+                    </td>
+                    <td>
+                        <%= element.Colaborador.Estado %>
+                    </td>
+                    <td>
+                        <%= "Fecha Creacion: " + element.Cotizacion.Fecha_Creacion %> <br>
+                            <%= "Fecha Finalización: " + element.Cotizacion.Fecha_Finalizacion %> <br>
+                                <%= "Estado Cotización: " + element.Cotizacion.Estado %>
+                    </td>
+
+                     <td>
+                        <%= element.Cotizacion.Cliente.Nombre_Cliente %>
+                    </td>
                     <!--<td>
-                        <%= // element.Colaborador.Estado %>
-                    </td>
-                    <td>
-                        <%= //element.Cotizacion.Fecha_Creacion %>
-                    </td>
-                    <td>
-                        <%= // element.Cotizacion.Cliente.Nombre_Cliente %>
-                    </td>
-                    <td>
                         <% // element.Cotizacion.Detalles_Cotizacion.Productos.forEach(producto=> { %>
                             <div>
                                 Nombre: <%= // producto.Nombre_Producto %>,
@@ -61,13 +68,34 @@
                             <% // }) %>
                     </td> -->
                     <td>
-                        <a href="/views/edit/<%= element._id %>">
-                            <button class="fondoOro">Editar</button>
-                        </a>
-                        <br>
-                        <form action="/edit/delete/<%= element._id %>" method="POST">
-                            <button type="submit" class="fondoVino">Eliminar</button>
+                        <a href="/views/edit/<%= element._id %>" class="clickeable fondoOro bordeOro custom-button">
+                            <button class="fondoOro bordeOro clickeable">Editar</button>
+                        </a><br><br>
+                        <form data-venta-id="<%= element._id %>" class="position-relative">
+                            <button type="button" class="fondoVino bordeVino clickeable custom-button"
+                                onclick="eliminarVenta('<%= element._id %>')">Eliminar</button>
                         </form>
+
+                        <script>
+                            function eliminarVenta(ventaId) {
+                                console.log("ID DE VENTAS EJS", ventaId)
+
+                                fetch(`/eliminar/${ventaId}`, {
+                                    method: 'DELETE',
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            window.location.reload();
+                                        } else {
+                                            console.error('Error al eliminar la venta');
+                                            window.location.reload();
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error de red:', error);
+                                    });
+                            }
+                        </script>
                     </td>
                 </tr>
                 <% }) %>
